@@ -4,6 +4,7 @@ public class XMLChecker {
 
     private StringBuilder XMLText; //contains XML text 
     private boolean correct; //set initially to false
+     private boolean checked; //set initially to false
     private int errorCount; //set initially to zero
     private ArrayList<String> tags;
     private StringBuilder correctXMLText;
@@ -11,13 +12,14 @@ public class XMLChecker {
     public XMLChecker(String XMLText) { //O(1)
         this.XMLText = new StringBuilder(XMLText);
         this.correct = false;
+        this.checked = false;
         this.tags = new ArrayList<>();
     }
 
     //O(n)
     public String getCorrectXML() //returns correct xml as a string  
     {
-        if (!correct) {
+        if (!checked) {
             throw new IllegalArgumentException();
         }
         return correctXMLText.toString();
@@ -26,7 +28,7 @@ public class XMLChecker {
     //O(1)
     public int getErrorCount() //returns the number of errors to user
     {
-        if (!correct) {
+        if (!checked) {
             throw new IllegalArgumentException();
         }
         return errorCount;
@@ -57,6 +59,7 @@ public class XMLChecker {
 
     //O(n) 
     public void Check() {
+        checked = true ;
         Stack<String> stack = new Stack<>();
         ArrayList<Integer> tagStart = getIndices("<"), tagEnd = getIndices(">"); //O(n)
         if (tagStart.size() != tagEnd.size()) //if number of "<" doesn't match number of ">" then XML file is invalid. 
