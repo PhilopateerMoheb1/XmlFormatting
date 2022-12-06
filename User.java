@@ -22,12 +22,14 @@ public class User implements Item {
     }
 
     public ArrayList<Post> getPostsListCopy() {
-        ArrayList<Post> postsTemp = posts;
+         ArrayList<Post> postsTemp = new ArrayList<>();
+        postsTemp.addAll(posts);
         return postsTemp;
     }
 
     public ArrayList<User> getFollowersListCopy() {
-        ArrayList<User> followersTemp = followers;
+       ArrayList<User> followersTemp =new ArrayList<>();
+        followersTemp.addAll(followers);
         return followersTemp;
     }
 
