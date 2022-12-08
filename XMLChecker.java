@@ -20,16 +20,16 @@ public class XMLChecker {
     public String getCorrectXML() //returns correct xml as a string  
     {
         if (!checked) {
-            throw new IllegalArgumentException();
+            throw new NullPointerException("you must check xml first\n");
         }
         return correctXMLText.toString();
     }
 
-    //O(1)
+   //O(1)
     public int getErrorCount() //returns the number of errors to user
     {
         if (!checked) {
-            throw new IllegalArgumentException();
+            throw new NullPointerException("you must check xml first\n");
         }
         return errorCount;
     }
@@ -57,7 +57,7 @@ public class XMLChecker {
         return indices;
     }
 
-    //O(n) 
+//O(n) 
     public void Check() {
         checked = true ;
         Stack<String> stack = new Stack<>();
@@ -73,9 +73,9 @@ public class XMLChecker {
         }
         for (var i : tags) {
             char c = i.charAt(1); //O(1)
-            if (c == '?' || c == '!') //ignore comments and preprocessor tags
+            if (isPreprocessorTag(i) || isCommentTag(i)) //ignore comments and preprocessor tags
             {
-            } else if (c == '/') //if closing tag check stack top, if it matches
+            } else if (isClosingTag(i)) //if closing tag check stack top, if it matches
             {
                 try {
                     if (stack.peek().equals(new StringBuilder(i).deleteCharAt(1).toString())) {
@@ -92,5 +92,25 @@ public class XMLChecker {
         }
         correct = stack.isEmpty();
 
+    }
+     //O(1)
+    private  boolean isClosingTag(String tag)
+    { 
+        return tag.charAt(0) =='<' && tag.charAt(1) =='/' && tag.charAt(tag.length()-1) == '>';
+    }
+    //O(1)
+    private  boolean isOpeningTag(String tag)
+    { 
+        return tag.charAt(0) =='<' && tag.charAt(1) !='/' && tag.charAt(tag.length()-1) == '>';
+    }
+    //O(1)
+    private  boolean isCommentTag(String tag)
+    { 
+        return tag.charAt(0) =='<' && tag.charAt(1) =='!' && tag.charAt(tag.length()-1) == '>';
+    }
+    //O(1)
+    private  boolean isPreprocessorTag(String tag)
+    { 
+        return tag.charAt(0) =='<' && tag.charAt(1) =='?' && tag.charAt(tag.length()-1) == '>';
     }
 }
