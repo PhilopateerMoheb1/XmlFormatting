@@ -1,22 +1,24 @@
+package folder.Project ;
 import java.util.ArrayList;
 
 public class XMLChecker {
 
     private StringBuilder XMLText; //contains XML text 
     private boolean correct; //set initially to false
-    private boolean checked; //set initially to false
+     private boolean checked; //set initially to false
     private int errorCount; //set initially to zero
     private ArrayList<String> tags;
     private ArrayList<String> words ;
-    private ArrayList<String> errors;
+    private ArrayList<String> errors ;
     private StringBuilder correctXMLText;
 
-   public XMLChecker(String XMLText) { //O(n)
+    public XMLChecker(String XMLText) { //O(n)
         this.XMLText = new StringBuilder(XMLText);
         this.correct = false;
         this.checked = false;
         this.tags = new ArrayList<>();
         this.words = new ArrayList<>();
+        this.errors = new ArrayList<>();
         ArrayList<Integer> tagStart = getIndices("<"), tagEnd = getIndices(">"); //O(n)
         if (tagStart.size() != tagEnd.size()) //if number of "<" doesn't match number of ">" then XML file is invalid. 
         {
@@ -33,7 +35,7 @@ public class XMLChecker {
             words.add(XMLText.substring(tagEnd.get(i)+1,tagStart.get(i+1)));
         }
     }
-
+    
     //O(n)
     public String getCorrectXML() //returns correct xml as a string  
     {
@@ -42,8 +44,8 @@ public class XMLChecker {
         }
         return correctXMLText.toString();
     }
-
-   //O(1)
+    
+    //O(1)
     public int getErrorCount() //returns the number of errors to user
     {
         if (!checked) {
@@ -56,7 +58,7 @@ public class XMLChecker {
     public boolean isCorrect() { //returns whether xml is correct or not 
         return correct;
     }
-     public String[] getWords()
+    public String[] getWords()
     { 
        return words.toArray(new String[words.size()]);
     }
@@ -66,7 +68,9 @@ public class XMLChecker {
     }
     public String[] getErrors()
     { 
-       return errors.toArray(new String[words.size()]);
+        if(errors.isEmpty())
+            errors.add("XML is error-free\n");
+       return errors.toArray(new String[errorCount]);
     }
     /* helper function used to extract tags from the string 
         takes a char < or > and returns a vector of indices of occurences of <
@@ -86,8 +90,8 @@ public class XMLChecker {
         return indices;
     }
 
-//O(n) 
-   public void Check() {
+    //O(n) 
+    public void Check() {
         checked = true ;
         boolean flag = true ;
         Stack<String> stack = new Stack<>();
@@ -114,7 +118,7 @@ public class XMLChecker {
         correct = stack.isEmpty() && flag;
 
     }
- //user must invoke check method first
+    //user must invoke check method first
     public void correct()
     { 
         if(!checked)
@@ -137,6 +141,7 @@ public class XMLChecker {
            correctXMLText.append(temp.deleteCharAt(1));
            stack.push(temp.toString());
            errorCount++;
+           errors.add("error at tag number " + tagIndex+"\nclosing tag"+tags.get(tagIndex)+" at start of file\n");
        }
        else if(isOpeningTag(tags.get(tagIndex)))
        { 
@@ -150,10 +155,7 @@ public class XMLChecker {
            visited = true ; 
        }
        correctXMLText.append(words.get(wordIndex++));
-       /* else
-           throw new IllegalArgumentException("xml document can't start with normal words\nIt must start with opening tag\n");*/
-       
-      //loop on the rest of the tags
+       //loop on the rest of the tags
        for( tagIndex = 1  ; tagIndex < tags.size() && (!stack.isEmpty()|| visited) ; tagIndex++ ) //if stack is empty then document has finished you must 
        { 
            if(isOpeningTag(tags.get(tagIndex)))
@@ -173,8 +175,9 @@ public class XMLChecker {
                else
                { 
                    temp = new StringBuilder(stack.pop());
-                   correctXMLText.append(temp.insert(1, "/"));
                    errorCount++;
+                   errors.add("error at  tag number " + tagIndex+"\nmismatch of tags "+temp +" and " + tags.get(tagIndex));
+                   correctXMLText.append(temp.insert(1, "/"));
                }
            }
            else if(isClosingTag(tags.get(tagIndex))&& stack.isEmpty())
@@ -182,6 +185,7 @@ public class XMLChecker {
                temp= new StringBuilder(tags.get(tagIndex)).deleteCharAt(1);
                correctXMLText.append(temp+"\n"+tags.get(tagIndex));
                errorCount++;
+               errors.add("error at closing tag number " + tagIndex+"\nThere is no matching opening tag for " + tags.get(tagIndex));
            }
            else if (isPreprocessorTag(tags.get(tagIndex)) || isCommentTag(tags.get(tagIndex)))//comments and preprocessor tags
            { 
@@ -191,16 +195,15 @@ public class XMLChecker {
            //normal words
            if(wordIndex < words.size())
                 correctXMLText.append(words.get(wordIndex++));
-           
         }
         while(!stack.isEmpty())
         { 
             temp = new StringBuilder(stack.pop());
             correctXMLText.append("\n"+ temp.insert(1, "/"));
             errorCount++;
+            errors.add("error at end of file\nmissing closing tag: " +  temp +" is not closed\n");
         }
-        
-    }
+     }
      //O(1)
     private  boolean isClosingTag(String tag)
     { 
@@ -211,14 +214,15 @@ public class XMLChecker {
     { 
         return tag.charAt(0) =='<' && tag.charAt(1) !='/' && tag.charAt(1) !='?'&&  tag.charAt(1) !='!'&& tag.charAt(tag.length()-1) == '>';
     }
-    //O(1)
     private  boolean isCommentTag(String tag)
     { 
         return tag.charAt(0) =='<' && tag.charAt(1) =='!' && tag.charAt(tag.length()-1) == '>';
     }
-    //O(1)
     private  boolean isPreprocessorTag(String tag)
     { 
         return tag.charAt(0) =='<' && tag.charAt(1) =='?' && tag.charAt(tag.length()-1) == '>';
     }
+    
+    
+    
 }
