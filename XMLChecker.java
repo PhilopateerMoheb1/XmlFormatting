@@ -8,6 +8,7 @@ public class XMLChecker {
     private int errorCount; //set initially to zero
     private ArrayList<String> tags;
     private ArrayList<String> words ;
+    private ArrayList<String> errors;
     private StringBuilder correctXMLText;
 
    public XMLChecker2(String XMLText) { //O(n)
@@ -55,7 +56,18 @@ public class XMLChecker {
     public boolean isCorrect() { //returns whether xml is correct or not 
         return correct;
     }
-
+     public String[] getWords()
+    { 
+       return words.toArray(new String[words.size()]);
+    }
+    public String[] getTags()
+    { 
+       return tags.toArray(new String[words.size()]);
+    }
+    public String[] getErrors()
+    { 
+       return errors.toArray(new String[words.size()]);
+    }
     /* helper function used to extract tags from the string 
         takes a char < or > and returns a vector of indices of occurences of <
      */
@@ -102,7 +114,7 @@ public class XMLChecker {
         correct = stack.isEmpty() && flag;
 
     }
-    //user must invoke check method first
+ //user must invoke check method first
     public void correct()
     { 
         if(!checked)
@@ -124,6 +136,7 @@ public class XMLChecker {
            temp = new StringBuilder(tags.get(tagIndex));
            correctXMLText.append(temp.deleteCharAt(1));
            stack.push(temp.toString());
+           errorCount++;
        }
        else if(isOpeningTag(tags.get(tagIndex)))
        { 
@@ -148,19 +161,27 @@ public class XMLChecker {
                stack.push(tags.get(tagIndex));
                correctXMLText.append(tags.get(tagIndex));
            }
-           else if(isClosingTag(tags.get(tagIndex)))
+           else if(isClosingTag(tags.get(tagIndex))&& !stack.isEmpty())
            { 
                temp = new StringBuilder(tags.get(tagIndex));
-               if(temp.deleteCharAt(1).toString().equals(stack.peek()))
+               if( temp.deleteCharAt(1).toString().equals(stack.peek()))
                { 
-                   stack.pop();
+                  stack.pop();
                    correctXMLText.append(tags.get(tagIndex));
-               }     
+               } 
+               
                else
                { 
                    temp = new StringBuilder(stack.pop());
                    correctXMLText.append(temp.insert(1, "/"));
+                   errorCount++;
                }
+           }
+           else if(isClosingTag(tags.get(tagIndex))&& stack.isEmpty())
+           { 
+               temp= new StringBuilder(tags.get(tagIndex)).deleteCharAt(1);
+               correctXMLText.append(temp+"\n"+tags.get(tagIndex));
+               errorCount++;
            }
            else if (isPreprocessorTag(tags.get(tagIndex)) || isCommentTag(tags.get(tagIndex)))//comments and preprocessor tags
            { 
@@ -176,6 +197,7 @@ public class XMLChecker {
         { 
             temp = new StringBuilder(stack.pop());
             correctXMLText.append("\n"+ temp.insert(1, "/"));
+            errorCount++;
         }
         
     }
