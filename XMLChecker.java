@@ -172,7 +172,7 @@ public class XMLChecker {
                
                else
                { 
-                   temp = new StringBuilder((Integer) stack.pop());
+                   temp = new StringBuilder(stack.pop());
                    correctXMLText.append(temp.insert(1, "/"));
                    errorCount++;
                }
@@ -195,7 +195,7 @@ public class XMLChecker {
         }
         while(!stack.isEmpty())
         { 
-            temp = new StringBuilder((Integer) stack.pop());
+            temp = new StringBuilder(stack.pop());
             correctXMLText.append("\n"+ temp.insert(1, "/"));
             errorCount++;
         }
