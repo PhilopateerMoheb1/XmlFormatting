@@ -1,32 +1,26 @@
+/*stack class implemented by Mina Mounir*/
+package folder.Project;
 import java.io.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Vector;
 
-public class Stack implements Serializable
+public class Stack<T> implements Serializable
 { 
-    private Vector<Object> values ;
-    private final int CAPACITY ;
-    private int pointer ;
-    public Stack(int capacity)
+    private ArrayList<T> values ;
+   public Stack()
     {
-         CAPACITY = capacity ;
-         values =  new Vector<Object>(CAPACITY);
+       values =  new ArrayList<T>();
     }
-
-    public Stack()
-    {
-         CAPACITY = 0 ;
-        values =  new Vector<Object>();
-    }
-    public int getPointer() {
-        return pointer;
+    public int size() {
+        return values.size();
     }
 
     @Override
     public String toString() {
         String s = "";
-        for(int i = 0 ; i< pointer;i++)
-            s+= values.get(i)+"\n";
+        for(var i : values )
+            s+= i+"\n";
         return s;
     }
     @Override
@@ -37,11 +31,9 @@ public class Stack implements Serializable
         if(!(o instanceof Stack))
             return false;
         Stack s =  (Stack) o ;
-        if(CAPACITY !=s.CAPACITY)
+        if(size() != s.size())
             return false;
-        if(pointer != s.pointer)
-            return false;
-        for(int i =0 ; i < pointer  ;i++)
+        for(int i =0 ; i < values.size()  ;i++)
         { 
             if(! values.get(i).equals(s.values.get(i)))
                 return false;
@@ -50,34 +42,30 @@ public class Stack implements Serializable
     }
     public boolean isEmpty()
     { 
-        return pointer == 0 ;
+        return values.size() == 0 ;
     }
-    public boolean isFull()
-    { 
-        return pointer == CAPACITY ;
-    }
-    public void push(Object o)
+    
+    public void push(T o)
     {
-         if(isFull())
-             throw new StackFullException("can't push to a full stack\n") ;
-         values.set(pointer++, o) ;
+         
+         values.add(o)   ;
     }
-    public Object pop()
+    public T pop()
     { 
         if(isEmpty())
             throw new StackEmptyException("can't pop to empty stack\n");
-        return values.get(pointer--);
+        return values.remove(values.size()-1);
     }
-    public Object peek()
+    public T peek()
     { 
         if(isEmpty())
             throw new StackEmptyException("can't pop to empty stack\n");
-        return values.get(pointer-1);
+        return values.get(values.size()-1);
     }
     public void save(String filename ) throws Exception
     {
          ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(filename));
-         for(int i = 0 ; i < pointer ;i++ )
+         for(int i = 0 ; i < values.size() ;i++ )
          { 
              if(! (values.get(i) instanceof Serializable))
                  throw new NotSerializableException();
@@ -102,14 +90,3 @@ class StackEmptyException extends RuntimeException {
     }
 }
 
-class StackFullException extends RuntimeException {
-
-    public StackFullException(String s) {
-        super(s);
-    }
-
-    public StackFullException() {
-    }
-    
-   
-}
