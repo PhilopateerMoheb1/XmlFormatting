@@ -11,7 +11,7 @@ public class XMLChecker {
     private ArrayList<String> errors;
     private StringBuilder correctXMLText;
 
-   public XMLChecker2(String XMLText) { //O(n)
+   public XMLChecker(String XMLText) { //O(n)
         this.XMLText = new StringBuilder(XMLText);
         this.correct = false;
         this.checked = false;
@@ -172,7 +172,7 @@ public class XMLChecker {
                
                else
                { 
-                   temp = new StringBuilder(stack.pop());
+                   temp = new StringBuilder((Integer) stack.pop());
                    correctXMLText.append(temp.insert(1, "/"));
                    errorCount++;
                }
@@ -195,7 +195,7 @@ public class XMLChecker {
         }
         while(!stack.isEmpty())
         { 
-            temp = new StringBuilder(stack.pop());
+            temp = new StringBuilder((Integer) stack.pop());
             correctXMLText.append("\n"+ temp.insert(1, "/"));
             errorCount++;
         }
