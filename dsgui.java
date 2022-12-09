@@ -5,7 +5,7 @@
 
 /**
  *
- * @author SHEREF ZEDAN
+ * @author  Ahmed Abdelmotelb Ali
  */
 public class dsgui extends javax.swing.JFrame {
 
