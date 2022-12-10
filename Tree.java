@@ -91,9 +91,9 @@ public class Tree {
         ArrayList<TreeNode>nodes=node.getChilds();
         for (int i=0;i<nodes.size();i++){
             if(nodes.get(i).getChilds().size()==0){
-                Json_Text+=indent.peek()+"\""+nodes.get(i).getName()+"\": "+nodes.get(i).getData()+",";
+                Json_Text+=indent.peek()+"\""+nodes.get(i).getName()+"\": "+nodes.get(i).getData();
                 if(nodes.size()>1&&i!=(nodes.size()-1)){
-                    Json_Text+="\n";
+                    Json_Text+=",\n";
                 }
             }
             else {
