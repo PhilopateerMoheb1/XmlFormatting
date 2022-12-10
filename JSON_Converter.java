@@ -6,10 +6,11 @@ public class JSON_Converter {
 
 
     public static void converter(XMLChecker xml){
-        if(xml.isCorrect()) {
+
             Tree tree = new Tree(xml);
             tree.TreeReady();
-        }
+            tree.Print();
+
     }
 
 

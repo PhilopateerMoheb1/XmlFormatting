@@ -4,7 +4,6 @@ public class TreeNode {
     private String name;
     private ArrayList<TreeNode>childs;
     private String data;
-    private int numOfNodes;
 
     public TreeNode() {
         childs=new ArrayList<>();

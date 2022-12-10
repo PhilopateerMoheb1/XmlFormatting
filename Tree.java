@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 //to print json
 //philopateer Moheb
@@ -8,6 +9,8 @@ public class Tree {
     private int counter;
     private String[]Tags;
     private String[]words;
+    private String Json_Text;
+    private Stack<String> indent;
 
     private void setRoot(TreeNode root) {
         this.root = root;
@@ -16,6 +19,8 @@ public class Tree {
     public Tree(XMLChecker xmlChecker) {
         this.xmlChecker = xmlChecker;
         counter = 0;
+        Json_Text=new String();
+        indent=new Stack<>();
     }
 
     public TreeNode makeNode(String name,String data){
@@ -68,10 +73,6 @@ public class Tree {
         }
 
 
-
-
-
-
     public void TreeReady(){
         Tags = xmlChecker.getTags();
         words = new String[xmlChecker.getWords().length];
@@ -86,8 +87,38 @@ public class Tree {
         root.setChilds(PutItInTree(0,Tags,words,Tags[0]));
     }
 
+    public String printToJson(TreeNode node){
+        ArrayList<TreeNode>nodes=node.getChilds();
+        for (int i=0;i<nodes.size();i++){
+            if(nodes.get(i).getChilds().size()==0){
+                Json_Text+=indent.peek()+"\""+nodes.get(i).getName()+"\": "+nodes.get(i).getData()+",";
+                if(nodes.size()>1&&i!=(nodes.size()-1)){
+                    Json_Text+="\n";
+                }
+            }
+            else {
+                if(indent.isEmpty()){
+                    Json_Text+="{\n";
+                    indent.push("    ");
+                }
+                Json_Text+=indent.peek()+"\""+nodes.get(i).getName().substring(1,nodes.get(i).getName().length()-1)+"\": [\n";
+                String indention=indent.peek()+"    ";
+                indent.push(indention);
+                Json_Text=printToJson(nodes.get(i));
+                indent.pop();
+            }
+
+        }
+        Json_Text+="\n"+indent.peek()+"]\n";
+        return Json_Text;
+    }
+    public void Print(){
+        System.out.print(printToJson(root.getChilds().get(0)));
+        Json_Text+="\n}";
+    }
 
     boolean isEmpty(){
         return root==null;
     }
+
 }
