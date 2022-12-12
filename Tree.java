@@ -75,6 +75,7 @@ public class Tree {
                     }
                 }
                 else {
+                    Tags[i]="Visited";
                     return childerns;
                 }
             }
@@ -136,8 +137,9 @@ public class Tree {
         return Json_Text;
     }
     public void Print(){
-        System.out.print(printToJson(root.getChilds().get(0)));
-        Json_Text.append("\n}");
+        printToJson(root.getChilds().get(0));
+        Json_Text.append("\n}\n");
+        System.out.print(Json_Text);
     }
 
     boolean isEmpty(){
