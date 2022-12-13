@@ -9,7 +9,7 @@ public class Tree {
     private int counter;
     private String[]Tags;
     private String[]words;
-    private String Json_Text;
+    private StringBuilder Json_Text;
     private Stack<String> indent;
 
     private void setRoot(TreeNode root) {
@@ -19,7 +19,7 @@ public class Tree {
     public Tree(XMLChecker xmlChecker) {
         this.xmlChecker = xmlChecker;
         counter = 0;
-        Json_Text=new String();
+        Json_Text=new StringBuilder();
         indent=new Stack<>();
     }
 
@@ -105,7 +105,7 @@ public class Tree {
         }
         return true;
     }
-    public String printToJson(TreeNode node){
+    public StringBuilder printToJson(TreeNode node){
         ArrayList<TreeNode>nodes=node.getChilds();
         for (int i=0;i<nodes.size();i++){
             if(nodes.get(i).getChilds().size()==0){
@@ -117,14 +117,21 @@ public class Tree {
                 }
                 if(nodes.size()>1&&i!=(nodes.size()-1)){
                     Json_Text+=",\n";
+                    Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + nodes.get(i).getData());
+                }
+                else{
+                    Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + "\""+nodes.get(i).getData()+"\"");
+                }
+                if(nodes.size()>1&&i!=(nodes.size()-1)){
+                    Json_Text.append(",\n");
                 }
             }
             else {
                 if(indent.isEmpty()){
-                    Json_Text+="{\n";
+                    Json_Text.append("{\n");
                     indent.push("    ");
                 }
-                Json_Text+=indent.peek()+"\""+nodes.get(i).getName().substring(1,nodes.get(i).getName().length()-1)+"\": [\n";
+                Json_Text.append(indent.peek()+"\""+nodes.get(i).getName().substring(1,nodes.get(i).getName().length()-1)+"\": [\n");
                 String indention=indent.peek()+"    ";
                 indent.push(indention);
                 Json_Text=printToJson(nodes.get(i));
@@ -132,12 +139,13 @@ public class Tree {
             }
 
         }
-        Json_Text+="\n"+indent.peek()+"]\n";
+        Json_Text.append("\n"+indent.peek()+"]\n");
         return Json_Text;
     }
     public void Print(){
-        System.out.print(printToJson(root.getChilds().get(0)));
-        Json_Text+="\n}";
+        printToJson(root.getChilds().get(0));
+        Json_Text.append("\n}\n");
+        System.out.print(Json_Text);
     }
 
     boolean isEmpty(){
