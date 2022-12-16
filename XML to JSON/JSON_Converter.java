@@ -5,11 +5,11 @@ import java.util.Scanner;
 public class JSON_Converter {
 
 
-    public static void converter(XMLChecker xml){
+    public static StringBuilder converter(XMLChecker xml){
 
             Tree tree = new Tree(xml);
             tree.TreeReady();
-            tree.Print();
+            return tree.Print();
 
     }
 
