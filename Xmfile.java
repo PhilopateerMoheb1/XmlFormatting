@@ -1,12 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Phase1;
-
 /**
  *
- * @author SHEREF ZEDAN
+ * @author Ahmed Abdelmotelb 
  */
 
 import dsgui.DsGui;
@@ -18,12 +12,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
-import javax.swing.JFileChooser;
 
-/**
- *
- * @author oy
- */
 public class Xmfile {
 
     private String address , content , output_file_address = ""  , Foldar_address , json_file_adress="";
