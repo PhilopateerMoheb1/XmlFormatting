@@ -104,7 +104,7 @@ public class Tree {
         root =new TreeNode();
         int i;
         for( i=0;i<Tags.length;i++){
-            if(XMLChecker.isCommentTag(Tags[i])&&!XMLChecker.isPreprocessorTag(Tags[i])){
+            if(XMLChecker.isCommentTag(Tags[i])||XMLChecker.isPreprocessorTag(Tags[i])){
                 Tags[i]="Visited";
                 continue;
             }
