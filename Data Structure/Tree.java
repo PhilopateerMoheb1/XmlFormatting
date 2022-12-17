@@ -1,4 +1,18 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Phase1;
+
+/**
+ *
+ * @author SHEREF ZEDAN
+ */
 import java.util.ArrayList;
+import java.util.Stack;
+
+//to print json
+//philopateer Mohebimport java.util.ArrayList;
 import java.util.Stack;
 
 //to print json
@@ -41,6 +55,7 @@ public class Tree {
                 String nameTemp = node.getName().substring(1, node.getName().length() - 1);
                 TreeNode n= new TreeNode();
                 String p = Tags[i].substring(0, 2);
+                if(!XMLChecker.isCommentTag(Tags[i])&&!XMLChecker.isPreprocessorTag(Tags[i])){
                 if(!nameTemp.equals(closingtagname)){
                     if (!p.equals("</")) {
                         String temp = Tags[i].substring(1, Tags[i].length() - 1);
@@ -66,8 +81,12 @@ public class Tree {
                     Tags[i]="Visited";
                     return childerns;
                 }
+                }
+                else{
+                Tags[i]="Visited";
+                }
             }
-
+           
         }
         return childerns;
         }
@@ -83,8 +102,18 @@ public class Tree {
             }
         }
         root =new TreeNode();
-        root.setName(Tags[2]);
-        root.setChilds(PutItInTree(root,3));
+        int i;
+        for( i=0;i<Tags.length;i++){
+            if(XMLChecker.isCommentTag(Tags[i])&&!XMLChecker.isPreprocessorTag(Tags[i])){
+                Tags[i]="Visited";
+                continue;
+            }
+            else{
+                   root.setName(Tags[i]);
+                   break;
+            }
+        }
+        root.setChilds(PutItInTree(root,i));
     }
 
     public boolean isNumeric(String s){
