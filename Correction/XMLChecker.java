@@ -6,7 +6,7 @@ package Phase1;
  */
 import java.util.ArrayList;
 
-public class XMLChecker {
+ public class XMLChecker {
 
     private StringBuilder XMLText; //contains XML text 
     private boolean correct; //set initially to false
@@ -24,7 +24,7 @@ public class XMLChecker {
         this.tags = new ArrayList<>();
         this.words = new ArrayList<>();
         this.errors = new ArrayList<>();
-        ArrayList<Integer> tagStart = getIndices("<"), tagEnd = getIndices(">"); //O(n)
+        ArrayList<Integer> tagStart = getIndices(XMLText,"<"), tagEnd = getIndices(XMLText,">"); //O(n)
         if (tagStart.size() != tagEnd.size()) //if number of "<" doesn't match number of ">" then XML file is invalid. 
         {
             throw new IllegalArgumentException(" number of '<' doesn't matching number of '>'\n");
@@ -69,7 +69,7 @@ public class XMLChecker {
     }
 
     public String[] getTags() {
-        return tags.toArray(new String[words.size()]);
+        return tags.toArray(new String[tags.size()]);
     }
 
     public String[] getErrors() {
@@ -83,12 +83,12 @@ public class XMLChecker {
         takes a char < or > and returns a vector of indices of occurences of <
      */
     //O(n^2)
-    public ArrayList<Integer> getIndices(String c) //get indices of certain character
+     public static ArrayList<Integer> getIndices(String target, String sample) //get indices of certain character
     {
         ArrayList<Integer> indices = new ArrayList<Integer>();
         int currentStartingIndex = 0, index;
         do { //<    tag>x1<     /tag><     tag>x2<     /tag>
-            index = XMLText.indexOf(c, currentStartingIndex); //O(n)
+            index = target.indexOf(sample, currentStartingIndex); //O(n)
             indices.add(index);  //O(n) 
             currentStartingIndex = index + 1;
         } while (currentStartingIndex != 0);
@@ -96,14 +96,13 @@ public class XMLChecker {
         indices.remove(lastIndex); //O(n)
         return indices;
     }
-
     //O(n) 
     public void Check() {
         checked = true;
         boolean flag = true;
         Stack<String> stack = new Stack<>();
 
-        ArrayList<Integer> tagStart = getIndices("<"), tagEnd = getIndices(">"); //O(n)
+        ArrayList<Integer> tagStart = getIndices(XMLText.toString(),"<"), tagEnd = getIndices(XMLText.toString(),">"); //O(n)
         if (XMLText.charAt(0) != '<') {
             errors.add("invalid xml file");
             return;
@@ -218,3 +217,4 @@ public class XMLChecker {
         return tag.charAt(0) == '<' && tag.charAt(1) == '?' && tag.charAt(tag.length() - 1) == '>';
     }
 }
+
