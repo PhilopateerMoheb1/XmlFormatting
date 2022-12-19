@@ -11,6 +11,7 @@ import Phase1.TreeNode;
 import Phase1.XMLChecker;
 import Phase1.Xmfile;
 import dsgui.DsGui;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -32,7 +33,6 @@ import javax.swing.JFileChooser;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author SHEREF ZEDAN
@@ -43,6 +43,7 @@ public class dsgui extends javax.swing.JFrame {
      * Creates new form dsgui
      */
     Xmfile x1;
+
     public dsgui() {
         initComponents();
     }
@@ -57,6 +58,7 @@ public class dsgui extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -65,13 +67,11 @@ public class dsgui extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         jButton6 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -84,12 +84,13 @@ public class dsgui extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        jLabel1.setText("jLabel1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(51, 51, 255));
-        jButton1.setText("To_jason");
-        jButton1.setEnabled(false);
+        jButton1.setText("TO JSON");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -98,8 +99,7 @@ public class dsgui extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton2.setForeground(new java.awt.Color(51, 51, 255));
-        jButton2.setText("Expand");
-        jButton2.setEnabled(false);
+        jButton2.setText("EXPAND");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -108,8 +108,7 @@ public class dsgui extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(51, 51, 255));
-        jButton3.setText("Formator");
-        jButton3.setEnabled(false);
+        jButton3.setText("FORMATE");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -118,7 +117,7 @@ public class dsgui extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(51, 51, 255));
-        jButton4.setText("openfile");
+        jButton4.setText("OPEN");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -127,8 +126,7 @@ public class dsgui extends javax.swing.JFrame {
 
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton5.setForeground(new java.awt.Color(51, 51, 255));
-        jButton5.setText("Compresser");
-        jButton5.setEnabled(false);
+        jButton5.setText("COMPRESS");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -137,7 +135,7 @@ public class dsgui extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(51, 51, 255));
-        jButton7.setText("CORRECTOR");
+        jButton7.setText("CORRECT");
         jButton7.setEnabled(false);
         jButton7.setMaximumSize(new java.awt.Dimension(119, 15));
         jButton7.setMinimumSize(new java.awt.Dimension(119, 15));
@@ -149,27 +147,17 @@ public class dsgui extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.setSelectedTextColor(new java.awt.Color(0, 204, 204));
         jScrollPane1.setViewportView(jTextArea1);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("XML-EDITOR");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("INPUT FILE");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("OUTPUT FILE");
-
+        jTextArea3.setEditable(false);
         jTextArea3.setColumns(20);
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton6.setForeground(new java.awt.Color(51, 51, 255));
-        jButton6.setText("xml checking");
+        jButton6.setText("CHECK");
         jButton6.setMaximumSize(new java.awt.Dimension(123, 15));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,11 +167,19 @@ public class dsgui extends javax.swing.JFrame {
 
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton8.setForeground(new java.awt.Color(51, 51, 255));
-        jButton8.setText("minify");
-        jButton8.setEnabled(false);
+        jButton8.setText("MINIFY");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
+            }
+        });
+
+        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(51, 51, 255));
+        jButton9.setText("clear");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
             }
         });
 
@@ -192,69 +188,53 @@ public class dsgui extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(13, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1035, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 8, Short.MAX_VALUE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(226, 226, 226))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 495, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 501, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane3))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73))
+                    .addComponent(jScrollPane1))
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -262,40 +242,47 @@ public class dsgui extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         jTextArea3.setText(null);
-        jButton8.setEnabled(true);
-        jButton5.setEnabled(true);  
-         jButton2.setEnabled(true);  
+        jButton2.setEnabled(true);
         jButton4.setText("OPEN FILE");
         try {
             // TODO add your handling code here:
             x1 = new Xmfile();
-            String filename= x1.opener() ;
+            String filename = x1.opener();
             x1.reader();
             jTextArea1.setText("");
-            jTextArea3.setText("");
-            System.out.println(filename);
+            jTextArea3.append("file: " + filename + " opened successfully!\n");
+            jTextArea3.setForeground(Color.green);
+            //       System.out.println(filename);
             x1.create_output_file(filename);
-            File file = new File (filename);
+            File file = new File(filename);
             Scanner scan = new Scanner(file);
             // scan.nextLine();
-            while(scan.hasNextLine())
+            while (scan.hasNextLine()) {
                 jTextArea1.append(scan.nextLine() + "\n");
+            }
             jTextArea1.requestFocus();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
-        }//open xml file
-        
-        
+        } catch (Exception e) {
+            jTextArea1.append(e.getMessage());
+        }
+//open xml file
+
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-            jTextArea3.setText(null);
-            jButton3.dispatchEvent(evt);
-            String s= jTextArea1.getText();
-            String v=Formatter.format(s);
-             System.out.println(v);
-             jTextArea3.append(v);    
-             jButton3.setEnabled(false);    // TODO add your handling code here:
+        jTextArea3.setText(null);
+        try {
+            String s = jTextArea1.getText();
+            String v = Formatter.format(s);
+            // System.out.println(v);
+            jTextArea3.append("formatted successfully!\n");
+            jTextArea3.setForeground(Color.green);
+            jTextArea1.setText(v);
+        } catch (Exception e) {
+            jTextArea1.append(e.getMessage());
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -311,47 +298,42 @@ public class dsgui extends javax.swing.JFrame {
         file = new File(file.toString() + ".z");
         String com = compress(str);
         FileWriter fw;
-        System.out.println(com);
         try {
             fw = new FileWriter(file);
             fw.write(com);
             fw.close();
         } catch (IOException ex) {
             Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
         }
-        jTextArea3.append("file compressed to " + file.getName() + " successfully\nold file size: "+str.length()+" bytes\ncompressed size: "+com.length()+" bytes \n");
-
-//        String m=compress(jTextArea1.getText());
-//        try {
-//            x1.writer(m, true);
-//            jTextArea3.append(m);
-//        } catch (IOException ex) {
-//            Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        x1.display(jTextArea3);
-//        System.out.println("you will compressed file");
-      jButton5.setEnabled(false); 
+        jTextArea3.append("file compressed to " + file.getName() + " successfully\nold file size: " + str.length() + " bytes\ncompressed size: " + com.length() + " bytes \n");
+        jTextArea3.setForeground(Color.green);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-         jTextArea3.setText(null);
-        XMLChecker x= new XMLChecker(jTextArea1.getText());
-        String []v=null;
-        x.Check();
-        x.correct();
-         int i=x.getErrorCount();
-          v=x.getErrors();
-           jTextArea3.append("number of errors  = "+i+"\n");
-                    for(int j=0;j<i;j++)
-                    {
+        jTextArea3.setText(null);
+        try {
+            XMLChecker x = new XMLChecker(jTextArea1.getText());
+            String[] v = null;
+            x.Check();
+            x.correct();
+            int i = x.getErrorCount();
+            v = x.getErrors();
+            jTextArea3.append("number of errors  = " + i + "\n");
+            for (int j = 0; j < i; j++) {
 
-                   jTextArea3.append(v[j]+"\n");
-                     }
-
-         jTextArea3.append("\n correct Xml is :\n");
-        jTextArea3.append(x.getCorrectXML());
-        System.out.println(" you will correct it");
-jButton7.setEnabled(false);        // TODO add your handling code here:
+                jTextArea3.append(v[j] + "\n");
+            }
+            jTextArea1.setText(null);
+            jTextArea1.append(x.getCorrectXML());
+            jTextArea3.append("XML corrected\n");
+            jTextArea3.setForeground(Color.green);
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -359,61 +341,113 @@ jButton7.setEnabled(false);        // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(jPanel1);
         File file = fc.getSelectedFile();
-        String[] name =file.getName().split("\\.");
-        if(!name[name.length-1].equals("z")){
+        String[] name = file.getName().split("\\.");
+        if (!name[name.length - 1].equals("z")) {
             jTextArea3.append("invalide extention");
+            jTextArea3.setForeground(Color.red);;
             return;
         }
         String com;
         try {
 
-            com =new String(Files.readAllBytes(file.toPath()));
-             System.out.println(com);
+            com = new String(Files.readAllBytes(file.toPath()));
+            System.out.println(com);
             jTextArea1.setText(expand(com));
-            jTextArea3.append("expanded "+ file.getName()+ " successfully");
+            jTextArea3.append("expanded " + file.getName() + " successfully\n");
+            jTextArea3.setForeground(Color.green);
             jButton2.setEnabled(false);
         } catch (IOException ex) {
             Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
         }
-       jButton2.setEnabled(false);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         jTextArea3.setText(null);
-        String v=jTextArea1.getText();
-         v= Deformatter.deformate(v);
-        XMLChecker x=new XMLChecker(v);
-        String d=converter(x).toString();
-       jTextArea3.append(d);  
-     System.out.println("you will convert To_jason");  
-     jButton1.setEnabled(false);    // TODO add your handling code here:
+        jTextArea3.setText(null);
+        String v = jTextArea1.getText();
+        if (v == null || v.isBlank()) {
+            jTextArea3.append("please insert text to convert\n");
+            return;
+        }
+        v = Deformatter.deformate(v);
+        XMLChecker x = new XMLChecker(v);
+        String d = converter(x).toString();
+
+        JFileChooser fc = new JFileChooser();
+        fc.showSaveDialog(jPanel1);
+        File file = fc.getSelectedFile();
+        file = new File(file.toString() + ".json");
+        FileWriter fw;
+        try {
+            fw = new FileWriter(file);
+            fw.write(d);
+            fw.close();
+        } catch (IOException ex) {
+            Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
+        }
+        jTextArea3.append("file converted to " + file.getName() + " successfully\n");
+        jTextArea3.setForeground(Color.green);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        jButton1.setEnabled(true);
-        jButton3.setEnabled(true);
-        jButton7.setEnabled(true);
         jTextArea3.setText(null);
-        jButton6.setText("XmlChecker");        
-        XMLChecker x= new XMLChecker( jTextArea1.getText());
-                x.Check();
-                if(x.isCorrect()==true)
-                { 
-                    jTextArea3.append("XML correct\n");
-                }
-                else if(x.isCorrect()==false)
-                {
-                     jTextArea3.append("XML is not correct\n");
-               }
+        if (jTextArea1.getText().isBlank()) {
+            jTextArea3.append("no text found!");
+            jTextArea3.setForeground(Color.red);
+            return;
+        }
+        XMLChecker x;
+        try {
+            x = new XMLChecker(jTextArea1.getText());
+            x.Check();
+            jButton7.setEnabled(true);
+            if (x.isCorrect() == true) {
+                jTextArea3.append("XML is correct!\n");
+                jTextArea3.setForeground(Color.green);
+                jButton1.setEnabled(true);
+                jButton3.setEnabled(true);
+                jButton7.setEnabled(true);
+            } else if (x.isCorrect() == false) {
+                jTextArea3.append("XML is not correct!\n");
+                jTextArea3.setForeground(Color.red);
+            }
+
+        } catch (IllegalArgumentException e) {
+            jTextArea3.append("XML is not correct\n");
+            jTextArea3.setForeground(Color.red);
+            return;
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        try {
             jTextArea3.setText(null);
-           String c=jTextArea1.getText();
-           c= Deformatter.deformate(c);
-           jTextArea3.append(c);
-        // TODO add your handling code here:
+            String c = jTextArea1.getText();
+            c = Deformatter.deformate(c);
+            jTextArea3.append("xml minified successfully\n");
+            jTextArea1.setText(c);
+            jTextArea3.setForeground(Color.green);
+            // TODO add your handling code here:
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        jTextArea1.setText(null);
+        jTextArea3.setText(null);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -459,9 +493,8 @@ jButton7.setEnabled(false);        // TODO add your handling code here:
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -470,7 +503,7 @@ jButton7.setEnabled(false);        // TODO add your handling code here:
     // End of variables declaration//GEN-END:variables
 
     private void openfileActionperformed(ActionEvent evt) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
 // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 
     }
