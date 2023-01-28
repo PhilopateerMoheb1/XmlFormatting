@@ -5,7 +5,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 
-public class Formatting
+public class Format
 {
 	public static String format(String xmlchecking) {
 		/* if the XML file is empty */
@@ -70,6 +70,6 @@ public class Formatting
 		String s ="<users><user><name>Ahmed Abdelmotelb</name><id>1901401</id></user>"
 				+ "<user><name>Ahmed Adel hassen</name><id>1900311</id></user></users>";
 
-		System.out.println(Formatting.format(s));
+		System.out.println(Format.format(s));
 	}
 }
