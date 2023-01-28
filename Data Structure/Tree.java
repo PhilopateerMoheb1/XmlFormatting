@@ -156,7 +156,7 @@ public class Tree {
         }
         if(node.Isparent()) {
             if (node.isLastChild()) {
-                Json_Text.append("\n" + indent.peek() + "]\n");
+                Json_Text.append("\n" + indent.peek() + "]");
             }
             else{
                 Json_Text.append("\n" + indent.peek() + "],\n");
@@ -165,7 +165,7 @@ public class Tree {
 
         else{
             if(node.isLastChild()) {
-                Json_Text.append("\n" + indent.peek() + "}\n");
+                Json_Text.append("\n" + indent.peek() + "}");
             }
             else{
                 Json_Text.append("\n" + indent.peek() + "},\n");
