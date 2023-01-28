@@ -3,7 +3,7 @@ import Phase1.Compressor;
 import static Phase1.Compressor.compress;
 import static Phase1.Compressor.expand;
 import Phase1.Deformatter;
-import Phase1.Formatter;
+import Phase1.Format;
 import Phase1.JSON_Converter;
 import static Phase1.JSON_Converter.converter;
 import Phase1.Tree;
@@ -295,7 +295,7 @@ public class dsgui extends javax.swing.JFrame {
                 jTextArea3.setForeground(Color.red);
                 return;
             }
-            String v = Formatter.format(s);
+            String v = Format.format(s);
             // System.out.println(v);
             jTextArea3.append("formatted successfully!\n");
             jTextArea3.setForeground(Color.green);
@@ -452,10 +452,11 @@ public class dsgui extends javax.swing.JFrame {
         try {
             jTextArea3.setText(null);
             String c = jTextArea1.getText();
-              if (c == null || c.isBlank()) {
-            jTextArea3.append("please insert text to compress\n");
-            return;
-        }
+            if (c == null || c.isBlank()) {
+                jTextArea3.append("please insert text to minify\n");
+                jTextArea3.setForeground(Color.red);
+                return;
+            }
             c = Deformatter.deformate(c);
             jTextArea3.append("xml minified successfully\n");
             jTextArea1.setText(c);
