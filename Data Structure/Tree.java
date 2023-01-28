@@ -115,6 +115,10 @@ public class Tree {
         ArrayList<TreeNode>nodes=node.getChilds();
         for (int i=0;i<nodes.size();i++){
             if(nodes.get(i).getChilds().size()==0){
+                if(indent.isEmpty()){//most recently added
+                    Json_Text.append("{\n");
+                    indent.push("    ");
+                }
                 if(isNumeric(nodes.get(i).getData())) {
                     Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + nodes.get(i).getData());
                 }
@@ -154,29 +158,27 @@ public class Tree {
 
             }
         }
-        if(node.Isparent()) {
-            if (node.isLastChild()) {
-                Json_Text.append("\n" + indent.peek() + "]");
-            }
-            else{
-                Json_Text.append("\n" + indent.peek() + "],\n");
-            }
-        }
+        if(node.getName()!="root") {
+            if (node.Isparent()) {
+                if (node.isLastChild()) {
+                    Json_Text.append("\n" + indent.peek() + "]");
+                } else {
+                    Json_Text.append("\n" + indent.peek() + "],\n");
+                }
+            } else {
+                if (node.isLastChild()) {
+                    Json_Text.append("\n" + indent.peek() + "}");
+                } else {
+                    Json_Text.append("\n" + indent.peek() + "},\n");
 
-        else{
-            if(node.isLastChild()) {
-                Json_Text.append("\n" + indent.peek() + "}");
-            }
-            else{
-                Json_Text.append("\n" + indent.peek() + "},\n");
-
+                }
             }
         }
         return Json_Text;
     }
     public StringBuilder Print(){
-
-        printToJson(root.getChilds().get(0));
+        root.setName("root");
+        printToJson(root);
         Json_Text.append("\n}\n");
         return Json_Text;
 
