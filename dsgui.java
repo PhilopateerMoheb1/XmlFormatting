@@ -27,6 +27,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 //1,3,7
 
 /*
@@ -59,19 +61,21 @@ public class dsgui extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        TOJSON = new javax.swing.JButton();
+        EXPAND = new javax.swing.JButton();
+        FORMAT = new javax.swing.JButton();
+        OPEN = new javax.swing.JButton();
+        COMPRESS = new javax.swing.JButton();
+        CORRECT = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        CHECK = new javax.swing.JButton();
+        MINIFY = new javax.swing.JButton();
+        clear = new javax.swing.JButton();
+        Analysis = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,60 +92,60 @@ public class dsgui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 255));
-        jButton1.setText("TO JSON");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        TOJSON.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        TOJSON.setForeground(new java.awt.Color(51, 51, 255));
+        TOJSON.setText("TO JSON");
+        TOJSON.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                TOJSONActionPerformed(evt);
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 51, 255));
-        jButton2.setText("EXPAND");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        EXPAND.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        EXPAND.setForeground(new java.awt.Color(51, 51, 255));
+        EXPAND.setText("EXPAND");
+        EXPAND.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                EXPANDActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(51, 51, 255));
-        jButton3.setText("FORMATE");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        FORMAT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FORMAT.setForeground(new java.awt.Color(51, 51, 255));
+        FORMAT.setText("FORMAT");
+        FORMAT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                FORMATActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(51, 51, 255));
-        jButton4.setText("OPEN");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        OPEN.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        OPEN.setForeground(new java.awt.Color(51, 51, 255));
+        OPEN.setText("OPEN");
+        OPEN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                OPENActionPerformed(evt);
             }
         });
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(51, 51, 255));
-        jButton5.setText("COMPRESS");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        COMPRESS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        COMPRESS.setForeground(new java.awt.Color(51, 51, 255));
+        COMPRESS.setText("COMPRESS");
+        COMPRESS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                COMPRESSActionPerformed(evt);
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(51, 51, 255));
-        jButton7.setText("CORRECT");
-        jButton7.setEnabled(false);
-        jButton7.setMaximumSize(new java.awt.Dimension(119, 15));
-        jButton7.setMinimumSize(new java.awt.Dimension(119, 15));
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        CORRECT.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CORRECT.setForeground(new java.awt.Color(51, 51, 255));
+        CORRECT.setText("CORRECT");
+        CORRECT.setEnabled(false);
+        CORRECT.setMaximumSize(new java.awt.Dimension(119, 15));
+        CORRECT.setMinimumSize(new java.awt.Dimension(119, 15));
+        CORRECT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                CORRECTActionPerformed(evt);
             }
         });
 
@@ -155,31 +159,41 @@ public class dsgui extends javax.swing.JFrame {
         jTextArea3.setRows(5);
         jScrollPane3.setViewportView(jTextArea3);
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(51, 51, 255));
-        jButton6.setText("CHECK");
-        jButton6.setMaximumSize(new java.awt.Dimension(123, 15));
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        CHECK.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        CHECK.setForeground(new java.awt.Color(51, 51, 255));
+        CHECK.setText("CHECK");
+        CHECK.setMaximumSize(new java.awt.Dimension(123, 15));
+        CHECK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                CHECKActionPerformed(evt);
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(51, 51, 255));
-        jButton8.setText("MINIFY");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        MINIFY.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        MINIFY.setForeground(new java.awt.Color(51, 51, 255));
+        MINIFY.setText("MINIFY");
+        MINIFY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                MINIFYActionPerformed(evt);
             }
         });
 
-        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton9.setForeground(new java.awt.Color(51, 51, 255));
-        jButton9.setText("clear");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        clear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clear.setForeground(new java.awt.Color(51, 51, 255));
+        clear.setText("clear");
+        clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                clearActionPerformed(evt);
+            }
+        });
+
+        Analysis.setBackground(new java.awt.Color(204, 204, 204));
+        Analysis.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        Analysis.setForeground(new java.awt.Color(51, 51, 255));
+        Analysis.setText("Analysis");
+        Analysis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AnalysisActionPerformed(evt);
             }
         });
 
@@ -192,19 +206,19 @@ public class dsgui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1035, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                                .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(CORRECT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(FORMAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(TOJSON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CHECK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(COMPRESS, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(MINIFY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(EXPAND, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(OPEN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clear, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                            .addComponent(Analysis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -213,24 +227,25 @@ public class dsgui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(OPEN, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CHECK, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CORRECT, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(MINIFY, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(COMPRESS, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(EXPAND, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(FORMAT, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TOJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))
+                        .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(Analysis, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
                 .addGap(33, 33, 33)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -240,10 +255,10 @@ public class dsgui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void OPENActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OPENActionPerformed
         jTextArea3.setText(null);
-        jButton2.setEnabled(true);
-        jButton4.setText("OPEN FILE");
+        EXPAND.setEnabled(true);
+        OPEN.setText("OPEN FILE");
         try {
             // TODO add your handling code here:
             x1 = new Xmfile();
@@ -269,12 +284,17 @@ public class dsgui extends javax.swing.JFrame {
 //open xml file
 
 
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_OPENActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void FORMATActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FORMATActionPerformed
         jTextArea3.setText(null);
         try {
             String s = jTextArea1.getText();
+            if (s == null || s.isBlank()) {
+                jTextArea3.append("please insert text to format\n");
+                jTextArea3.setForeground(Color.red);
+                return;
+            }
             String v = Formatter.format(s);
             // System.out.println(v);
             jTextArea3.append("formatted successfully!\n");
@@ -283,9 +303,9 @@ public class dsgui extends javax.swing.JFrame {
         } catch (Exception e) {
             jTextArea1.append(e.getMessage());
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_FORMATActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void COMPRESSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_COMPRESSActionPerformed
         jTextArea3.setText(null);
         String str = jTextArea1.getText();
         if (str == null || str.isBlank()) {
@@ -310,9 +330,9 @@ public class dsgui extends javax.swing.JFrame {
         }
         jTextArea3.append("file compressed to " + file.getName() + " successfully\nold file size: " + str.length() + " bytes\ncompressed size: " + com.length() + " bytes \n");
         jTextArea3.setForeground(Color.green);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_COMPRESSActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void CORRECTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CORRECTActionPerformed
         jTextArea3.setText(null);
         try {
             XMLChecker x = new XMLChecker(jTextArea1.getText());
@@ -334,9 +354,9 @@ public class dsgui extends javax.swing.JFrame {
             jTextArea3.append(e.toString());
             jTextArea3.setForeground(Color.red);
         }
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_CORRECTActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void EXPANDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EXPANDActionPerformed
         jTextArea3.setText(null);
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(jPanel1);
@@ -355,7 +375,7 @@ public class dsgui extends javax.swing.JFrame {
             jTextArea1.setText(expand(com));
             jTextArea3.append("expanded " + file.getName() + " successfully\n");
             jTextArea3.setForeground(Color.green);
-            jButton2.setEnabled(false);
+            EXPAND.setEnabled(false);
         } catch (IOException ex) {
             Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception e) {
@@ -363,9 +383,9 @@ public class dsgui extends javax.swing.JFrame {
             jTextArea3.setForeground(Color.red);
         }
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_EXPANDActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TOJSONActionPerformed
         jTextArea3.setText(null);
         String v = jTextArea1.getText();
         if (v == null || v.isBlank()) {
@@ -393,9 +413,9 @@ public class dsgui extends javax.swing.JFrame {
         }
         jTextArea3.append("file converted to " + file.getName() + " successfully\n");
         jTextArea3.setForeground(Color.green);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_TOJSONActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void CHECKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CHECKActionPerformed
         jTextArea3.setText(null);
         if (jTextArea1.getText().isBlank()) {
             jTextArea3.append("no text found!");
@@ -406,13 +426,13 @@ public class dsgui extends javax.swing.JFrame {
         try {
             x = new XMLChecker(jTextArea1.getText());
             x.Check();
-            jButton7.setEnabled(true);
+            CORRECT.setEnabled(true);
             if (x.isCorrect() == true) {
                 jTextArea3.append("XML is correct!\n");
                 jTextArea3.setForeground(Color.green);
-                jButton1.setEnabled(true);
-                jButton3.setEnabled(true);
-                jButton7.setEnabled(true);
+                TOJSON.setEnabled(true);
+                FORMAT.setEnabled(true);
+                CORRECT.setEnabled(true);
             } else if (x.isCorrect() == false) {
                 jTextArea3.append("XML is not correct!\n");
                 jTextArea3.setForeground(Color.red);
@@ -426,12 +446,16 @@ public class dsgui extends javax.swing.JFrame {
             jTextArea3.append(e.toString());
             jTextArea3.setForeground(Color.red);
         }
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_CHECKActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void MINIFYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MINIFYActionPerformed
         try {
             jTextArea3.setText(null);
             String c = jTextArea1.getText();
+              if (c == null || c.isBlank()) {
+            jTextArea3.append("please insert text to compress\n");
+            return;
+        }
             c = Deformatter.deformate(c);
             jTextArea3.append("xml minified successfully\n");
             jTextArea1.setText(c);
@@ -441,13 +465,17 @@ public class dsgui extends javax.swing.JFrame {
             jTextArea3.append(e.toString());
             jTextArea3.setForeground(Color.red);
         }
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }//GEN-LAST:event_MINIFYActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearActionPerformed
         jTextArea1.setText(null);
         jTextArea3.setText(null);
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    }//GEN-LAST:event_clearActionPerformed
+
+    private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
+
+    }//GEN-LAST:event_AnalysisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -485,15 +513,17 @@ public class dsgui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton Analysis;
+    private javax.swing.JButton CHECK;
+    private javax.swing.JButton COMPRESS;
+    private javax.swing.JButton CORRECT;
+    private javax.swing.JButton EXPAND;
+    private javax.swing.JButton FORMAT;
+    private javax.swing.JButton MINIFY;
+    private javax.swing.JButton OPEN;
+    private javax.swing.JButton TOJSON;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton clear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
