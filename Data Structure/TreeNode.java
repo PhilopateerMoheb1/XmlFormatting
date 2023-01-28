@@ -4,6 +4,24 @@ public class TreeNode {
     private String name;
     private ArrayList<TreeNode>childs;
     private String data;
+    private boolean parent=true;
+    private boolean lastChild=false;
+
+    public boolean isLastChild() {
+        return lastChild;
+    }
+
+    public void setLastChild(boolean lastChild) {
+        this.lastChild = lastChild;
+    }
+
+    public void setIsparent(boolean isparent) {
+        this.parent = isparent;
+    }
+
+    public boolean Isparent() {
+        return parent;
+    }
 
     public TreeNode() {
         childs=new ArrayList<>();

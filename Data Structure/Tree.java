@@ -1,18 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Phase1;
-
-/**
- *
- * @author SHEREF ZEDAN
- */
 import java.util.ArrayList;
-import java.util.Stack;
-
-//to print json
-//philopateer Mohebimport java.util.ArrayList;
 import java.util.Stack;
 
 //to print json
@@ -55,7 +41,6 @@ public class Tree {
                 String nameTemp = node.getName().substring(1, node.getName().length() - 1);
                 TreeNode n= new TreeNode();
                 String p = Tags[i].substring(0, 2);
-                if(!XMLChecker.isCommentTag(Tags[i])&&!XMLChecker.isPreprocessorTag(Tags[i])){
                 if(!nameTemp.equals(closingtagname)){
                     if (!p.equals("</")) {
                         String temp = Tags[i].substring(1, Tags[i].length() - 1);
@@ -63,7 +48,10 @@ public class Tree {
 
                         if (temp.equals(temp2)) {//<id></id>?id==id? to check equality of tags
                             Tags[i] = "Visited";
-                            childerns.add(makeNode(temp, words[counter]));
+                            TreeNode treeNodeTemp=makeNode(temp, words[counter]);
+                            treeNodeTemp.setIsparent(false);
+                            node.setIsparent(false);
+                            childerns.add(treeNodeTemp);
                             counter++;
                         } else {
                             n.setName(Tags[i]);
@@ -79,15 +67,13 @@ public class Tree {
                 }
                 else{
                     Tags[i]="Visited";
+                    childerns.get(childerns.size()-1).setLastChild(true);
                     return childerns;
                 }
-                }
-                else{
-                Tags[i]="Visited";
-                }
             }
-           
+
         }
+        childerns.get(childerns.size()-1).setLastChild(true);
         return childerns;
         }
 
@@ -109,11 +95,12 @@ public class Tree {
                 continue;
             }
             else{
-                   root.setName(Tags[i]);
-                   break;
+                root.setName(Tags[i]);
+                break;
             }
         }
         root.setChilds(PutItInTree(root,i));
+        root.getChilds().get(root.getChilds().size()-1).setLastChild(true);
     }
 
     public boolean isNumeric(String s){
@@ -132,7 +119,16 @@ public class Tree {
                     Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + nodes.get(i).getData());
                 }
                 else{
-                    Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + "\""+nodes.get(i).getData()+"\"");
+                    if(nodes.get(i).getData().length()>30){
+                        Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + "[\n");
+                        indent.push(indent.peek()+"   ");
+                        Json_Text.append(indent.peek()+"\""+nodes.get(i).getData()+"\"");
+                        indent.pop();
+                        Json_Text.append("\n"+indent.peek()+"]");
+                    }
+                    else {
+                        Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName() + "\": " + "\"" + nodes.get(i).getData() + "\"");
+                    }
                 }
                 if(nodes.size()>1&&i!=(nodes.size()-1)){
                     Json_Text.append(",\n");
@@ -144,20 +140,43 @@ public class Tree {
                     indent.push("    ");
 
                 }
-                Json_Text.append(indent.peek()+"\""+nodes.get(i).getName().substring(1,nodes.get(i).getName().length()-1)+"\": [\n");
-                String indention=indent.peek()+"    ";
-                indent.push(indention);
-                Json_Text=printToJson(nodes.get(i));
-                indent.pop();
-            }
+                if(nodes.get(i).Isparent()) {
+                    Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName().substring(1, nodes.get(i).getName().length() - 1) + "\": [\n");
+                }
+                else{
+                    Json_Text.append(indent.peek() + "\"" + nodes.get(i).getName().substring(1, nodes.get(i).getName().length() - 1) + "\": {\n");
+                }
+                    String indention = indent.peek() + "    ";
+                    indent.push(indention);
+                    Json_Text = printToJson(nodes.get(i));
 
+                    indent.pop();
+
+            }
         }
-        Json_Text.append("\n"+indent.peek()+"]\n");
+        if(node.Isparent()) {
+            if (node.isLastChild()) {
+                Json_Text.append("\n" + indent.peek() + "]\n");
+            }
+            else{
+                Json_Text.append("\n" + indent.peek() + "],\n");
+            }
+        }
+
+        else{
+            if(node.isLastChild()) {
+                Json_Text.append("\n" + indent.peek() + "}\n");
+            }
+            else{
+                Json_Text.append("\n" + indent.peek() + "},\n");
+
+            }
+        }
         return Json_Text;
     }
     public StringBuilder Print(){
 
-        printToJson(root);
+        printToJson(root.getChilds().get(0));
         Json_Text.append("\n}\n");
         return Json_Text;
 
