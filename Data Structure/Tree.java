@@ -184,6 +184,10 @@ public class Tree {
 
     }
 
+    public TreeNode getRoot() {
+        return root;
+    }
+
     boolean isEmpty(){
         return root==null;
     }
