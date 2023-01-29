@@ -6,7 +6,7 @@ public class Post implements Item{
 
 
     public ArrayList<String> getTopicsListCopy() {
-      ArrayList<String> tempTopic=new ArrayList<>();
+        ArrayList<String> tempTopic=new ArrayList<>();
         tempTopic.addAll(topics);
         return tempTopic;
     }

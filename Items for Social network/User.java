@@ -21,14 +21,22 @@ public class User implements Item {
         return name;
     }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public ArrayList<Post> getPostsListCopy() {
-         ArrayList<Post> postsTemp = new ArrayList<>();
+        ArrayList<Post> postsTemp = new ArrayList<>();
         postsTemp.addAll(posts);
         return postsTemp;
     }
 
     public ArrayList<User> getFollowersListCopy() {
-       ArrayList<User> followersTemp =new ArrayList<>();
+        ArrayList<User> followersTemp =new ArrayList<>();
         followersTemp.addAll(followers);
         return followersTemp;
     }
@@ -57,6 +65,14 @@ public class User implements Item {
             s += "Name: " + followers.get(i).getName() + "\n" + "ID: " + followers.get(i).getID() + "\n";
         }
         return s;
+    }
+
+    public void setPosts(ArrayList<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void setFollowers(ArrayList<User> followers) {
+        this.followers = followers;
     }
 
     public static void main(String[] args) {
