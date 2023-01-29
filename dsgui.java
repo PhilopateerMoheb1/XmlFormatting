@@ -27,6 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 //1,3,7
@@ -62,6 +63,13 @@ public class dsgui extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jFrame1 = new javax.swing.JFrame();
+        jFrame2 = new javax.swing.JFrame();
+        jFrame3 = new javax.swing.JFrame();
+        jFileChooser1 = new javax.swing.JFileChooser();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
+        scrollbar1 = new java.awt.Scrollbar();
         TOJSON = new javax.swing.JButton();
         EXPAND = new javax.swing.JButton();
         FORMAT = new javax.swing.JButton();
@@ -89,6 +97,41 @@ public class dsgui extends javax.swing.JFrame {
         );
 
         jLabel1.setText("jLabel1");
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
+        jFrame2.getContentPane().setLayout(jFrame2Layout);
+        jFrame2Layout.setHorizontalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame2Layout.setVerticalGroup(
+            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jFrame3Layout = new javax.swing.GroupLayout(jFrame3.getContentPane());
+        jFrame3.getContentPane().setLayout(jFrame3Layout);
+        jFrame3Layout.setHorizontalGroup(
+            jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame3Layout.setVerticalGroup(
+            jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(jTextPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -475,7 +518,74 @@ public class dsgui extends javax.swing.JFrame {
     }//GEN-LAST:event_clearActionPerformed
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
+        JFrame fra = new JFrame("analysis");
+        fra.setResizable(false);
+        fra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        fra.setSize(1000, 1000);
+        fra.setVisible(true);
+        jPanel2 = new javax.swing.JPanel();
+        jPanel2.setLayout(null);
+        jPanel2.setRequestFocusEnabled(true);
+        search = new javax.swing.JButton();
+        GetMutul = new javax.swing.JButton();
+        GetAnalysis = new javax.swing.JButton();
+        jTextArea2 = new javax.swing.JTextArea();
+        jTextArea4 = new javax.swing.JTextArea();
+        jTextArea5 = new javax.swing.JTextArea();
+        jTextArea6 = new javax.swing.JTextArea();
+                jTextArea7 = new javax.swing.JTextArea();
+        jTextArea8 = new javax.swing.JTextArea();
+        jPanel2.add(GetMutul);
+        GetMutul.setBounds(110, 100, 100, 50);
+        GetMutul.setText("GetMutul");
+        jPanel2.add(GetAnalysis);
+        GetAnalysis.setBounds(110, 150, 100, 50);
+        GetAnalysis.setText("GetAnalysis");
+        jPanel2.add(jTextArea2);
+        jPanel2.add(jTextArea4);
+        jPanel2.add(jTextArea5);
+        jPanel2.add(jTextArea6);
+                jPanel2.add(jTextArea7);
+        jPanel2.add(jTextArea8);
+        fra.add(jPanel2);
+        search.setText("search");
+        search.setBounds(110, 50, 100, 50);
+        jPanel2.add(search);
 
+        search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchActionPerformed(evt);
+            }
+
+            private void searchActionPerformed(ActionEvent evt) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+
+        GetAnalysis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GetAnalysisActionPerformed(evt);
+            }
+
+            private void GetAnalysisActionPerformed(ActionEvent evt) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+
+        GetMutul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GetMutulActionPerformed(evt);
+            }
+
+            private void GetMutulActionPerformed(ActionEvent evt) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            }
+        });
+        jTextArea2.setBounds(250, 150, 550, 50);//get analysis
+        jTextArea5.setBounds(250, 100, 250, 50);// GetMutul
+        jTextArea6.setBounds(550, 100, 250, 50);// GetMutul
+        jTextArea7.setBounds(250, 50, 550, 50);// search
+        jTextArea8.setBounds(110,200, 700, 1000);
     }//GEN-LAST:event_AnalysisActionPerformed
 
     /**
@@ -525,13 +635,30 @@ public class dsgui extends javax.swing.JFrame {
     private javax.swing.JButton TOJSON;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton clear;
+    private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JFrame jFrame2;
+    private javax.swing.JFrame jFrame3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextPane jTextPane1;
+    private java.awt.Scrollbar scrollbar1;
     // End of variables declaration//GEN-END:variables
+    private javax.swing.JButton search;
+    private javax.swing.JButton GetMutul;
+    private javax.swing.JButton GetAnalysis;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTextArea jTextArea5;
+    private javax.swing.JTextArea jTextArea6;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextArea jTextArea7;
+    private javax.swing.JTextArea jTextArea8;
 
     private void openfileActionperformed(ActionEvent evt) {
         throw new UnsupportedOperationException("Not supported yet.");
