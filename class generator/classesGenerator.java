@@ -25,10 +25,16 @@ public class classesGenerator {
                     else if(treeNodesChilds.get(j).getName().equals("<followers>")){
                         user.setFollowers(generatefollowers(treeNodesChilds.get(j),new ArrayList<User>()));
                     }
+                    else{
+                        throw new IllegalArgumentException("Invalid XML");
+                    }
                 }
                 users.add(user);
                 users.addAll(user.getFollowersListCopy());
                 continue;
+            }
+            else{
+                throw new IllegalArgumentException("Invalid XML");
             }
         }
         return users;
@@ -42,7 +48,6 @@ public class classesGenerator {
                 }
                 else if(node.getChilds().get(j).getName().equals("<topics>")){
                     for (int k=0;k<node.getChilds().get(j).getChilds().size();k++){
-                        System.out.println(String.valueOf(node.getChilds().get(j).getChilds().get(k)));
                         post.addTopic(node.getChilds().get(j).getChilds().get(k).getData());
                     }
                 }
