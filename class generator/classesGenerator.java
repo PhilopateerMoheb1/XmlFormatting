@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class classesGenerator {
+    private int defaultNameNumber;
      ArrayList<User> generate(XMLChecker xmlChecker){
         ArrayList<User>users=new ArrayList<>();
         Tree tree=new Tree(xmlChecker);
@@ -10,7 +11,9 @@ public class classesGenerator {
         ArrayList<TreeNode>treeNodes=treeNode.getChilds().get(0).getChilds();
         for (int i=0;i<treeNodes.size();i++){
             if(treeNodes.get(i).getName().equals("<user>")){
-              User user=new User(0,"NULL");//null and 0 need to be initialize
+                String defaultName="Social Network"+defaultNameNumber;
+                defaultNameNumber++;
+              User user=new User(0,defaultName);//null and 0 need to be initialize
                 ArrayList<TreeNode>treeNodesChilds=treeNodes.get(i).getChilds();
                 for (int j=0;j<treeNodesChilds.size();j++){
                     if(treeNodesChilds.get(j).getName().equals("id")){
@@ -55,8 +58,9 @@ public class classesGenerator {
             return posts;
         }
         for (int i=0;i<node.getChilds().size();i++){
-            posts=generatePosts(node.getChilds().get(i),posts,post);
-            posts.add(post);
+            Post post1=new Post();
+            posts=generatePosts(node.getChilds().get(i),posts,post1);
+            posts.add(post1);
         }
         return posts;
     }
@@ -65,7 +69,9 @@ public class classesGenerator {
         if(node.getName().equals("<follower>"))
         {
             for (int i=0;i<node.getChilds().size();i++) {
-                User user = new User(0, "NULL");//null and 0 need to be initialize
+                String defaultName="Social Network"+defaultNameNumber;
+                defaultNameNumber++;
+                User user = new User(0, defaultName);//null and 0 need to be initialize
                 //if (node.getChilds().get(i).getName().equals("<user>")) {
                    // ArrayList<TreeNode> treeNodesChilds = node.getChilds().get(i).getChilds();
                    // for (int j = 0; j < treeNodesChilds.size(); j++) {
