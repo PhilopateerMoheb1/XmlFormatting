@@ -1,11 +1,11 @@
 
-package fro;
+
 
 import java.util.Stack;
 import java.util.Vector;
 
 
-public class Format
+public class Formatter
 {
 	public static String format(String xmlchecking) {
 		/* if the XML file is empty */
