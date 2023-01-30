@@ -6,10 +6,13 @@ import Phase1.Deformatter;
 import Phase1.Format;
 import Phase1.JSON_Converter;
 import static Phase1.JSON_Converter.converter;
+import Phase1.Post;
 import Phase1.Tree;
 import Phase1.TreeNode;
+import Phase1.User;
 import Phase1.XMLChecker;
 import Phase1.Xmfile;
+import Phase1.classesGenerator;
 import dsgui.DsGui;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -26,10 +29,13 @@ import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import phase2.PostSearch;
+import phase2.Vizualizer;
 //1,3,7
 
 /*
@@ -41,14 +47,16 @@ import javax.swing.JPanel;
  * @author SHEREF ZEDAN
  */
 public class dsgui extends javax.swing.JFrame {
-
+            User[] user;
     /**
      * Creates new form dsgui
      */
     Xmfile x1;
+ 
 
     public dsgui() {
         initComponents();
+
     }
 
     /**
@@ -249,7 +257,7 @@ public class dsgui extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(CORRECT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -518,74 +526,25 @@ public class dsgui extends javax.swing.JFrame {
     }//GEN-LAST:event_clearActionPerformed
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
-        JFrame fra = new JFrame("analysis");
-        fra.setResizable(false);
-        fra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        fra.setSize(1000, 1000);
-        fra.setVisible(true);
-        jPanel2 = new javax.swing.JPanel();
-        jPanel2.setLayout(null);
-        jPanel2.setRequestFocusEnabled(true);
-        search = new javax.swing.JButton();
-        GetMutul = new javax.swing.JButton();
-        GetAnalysis = new javax.swing.JButton();
-        jTextArea2 = new javax.swing.JTextArea();
-        jTextArea4 = new javax.swing.JTextArea();
-        jTextArea5 = new javax.swing.JTextArea();
-        jTextArea6 = new javax.swing.JTextArea();
-                jTextArea7 = new javax.swing.JTextArea();
-        jTextArea8 = new javax.swing.JTextArea();
-        jPanel2.add(GetMutul);
-        GetMutul.setBounds(110, 100, 100, 50);
-        GetMutul.setText("GetMutul");
-        jPanel2.add(GetAnalysis);
-        GetAnalysis.setBounds(110, 150, 100, 50);
-        GetAnalysis.setText("GetAnalysis");
-        jPanel2.add(jTextArea2);
-        jPanel2.add(jTextArea4);
-        jPanel2.add(jTextArea5);
-        jPanel2.add(jTextArea6);
-                jPanel2.add(jTextArea7);
-        jPanel2.add(jTextArea8);
-        fra.add(jPanel2);
-        search.setText("search");
-        search.setBounds(110, 50, 100, 50);
-        jPanel2.add(search);
+        try {
+            XMLChecker generate = new XMLChecker(Deformatter.deformate(jTextArea1.getText()));
+            generate.Check();
+            generate.correct();
+            XMLChecker generate2 = new XMLChecker(Deformatter.deformate(generate.getCorrectXML()));
+            classesGenerator v = new classesGenerator();
+            ArrayList user1 = v.generate(generate2);
+            user = (User[]) user1.toArray(new User[user1.size()]);
+            boolean generframe = generate2.isCorrect();
 
-        search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchActionPerformed(evt);
-            }
-
-            private void searchActionPerformed(ActionEvent evt) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
-
-        GetAnalysis.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GetAnalysisActionPerformed(evt);
-            }
-
-            private void GetAnalysisActionPerformed(ActionEvent evt) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
-
-        GetMutul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GetMutulActionPerformed(evt);
-            }
-
-            private void GetMutulActionPerformed(ActionEvent evt) {
-                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-            }
-        });
-        jTextArea2.setBounds(250, 150, 550, 50);//get analysis
-        jTextArea5.setBounds(250, 100, 250, 50);// GetMutul
-        jTextArea6.setBounds(550, 100, 250, 50);// GetMutul
-        jTextArea7.setBounds(250, 50, 550, 50);// search
-        jTextArea8.setBounds(110,200, 700, 1000);
+     while (generframe) {
+              generframe = false;
+              part2 i=new part2(user);
+              i.show();
+           }
+        } catch (Exception e) {
+            jTextArea3.append(e.toString());
+            jTextArea3.setForeground(Color.red);
+        }
     }//GEN-LAST:event_AnalysisActionPerformed
 
     /**
@@ -621,6 +580,7 @@ public class dsgui extends javax.swing.JFrame {
                 new dsgui().setVisible(true);
             }
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -659,6 +619,7 @@ public class dsgui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextArea jTextArea7;
     private javax.swing.JTextArea jTextArea8;
+    private javax.swing.JButton Visuallizer;
 
     private void openfileActionperformed(ActionEvent evt) {
         throw new UnsupportedOperationException("Not supported yet.");
