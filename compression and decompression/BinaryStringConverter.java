@@ -6,19 +6,20 @@
 public class BinaryStringConverter {
 
     private final StringBuilder sb;
-
+    // create empty converter to write bit to O(1)
     public BinaryStringConverter() {
         sb = new StringBuilder();
     }
+    // create converter using bit stream from StringBinaryConverter O(n)
     public BinaryStringConverter(StringBinaryConverter SBC) {
         sb = new StringBuilder();
         sb.append(SBC.getBinary());
     }
-
+    // wirte 1 bit O(1)
     public void write(boolean b) {
         sb.append(b ? '1' : '0');
     }
-
+    // write 32 bit O(1)
     public void write(int i) {
         
         write((char)((i >>> 24) & 0xff));
@@ -28,16 +29,19 @@ public class BinaryStringConverter {
     
 //        Integer.toBinaryString(i);
     }
-
+    //write 8 bits O(1)
     public void write(char c) {
         sb.append(String.format("%8s", Integer.toBinaryString(c)).replaceAll(" ", "0"));
     }
-
+//  write string O(1)
     public void write(String s) {
         for (int i = 0; i < s.length(); i++) {
             write(s.charAt(i));
         }
     }
+    
+    
+    // get the string of the steam of bits
     @Override
     public String toString(){
         if(sb.length()%8>0){
@@ -47,7 +51,7 @@ public class BinaryStringConverter {
         }
         return convertToString(sb.toString());
     }
-    
+    // convert stream of bits into string
     public static String convertToString(String Binary){
         if(Binary.length()%8>0)throw new IllegalArgumentException("Binary length not divisible by 8");
         StringBuilder sb = new StringBuilder();
