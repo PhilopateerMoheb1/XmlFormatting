@@ -11,10 +11,14 @@ public class Vizualizer {
     /**
      * @param args the command line arguments
      */
+    
+    // size setting adjustments
     private static final int sizeMin = 30;
     private static final int degreeScale = 5;
     private static final int TxtSizeMin = 10;
     private static final int TxtDegreeScale = 3;
+    
+    // graph css stylesheet
     protected static String styleSheet = """
     graph {
             fill-mode:gradient-vertical;                      
@@ -41,7 +45,7 @@ public class Vizualizer {
     """;
 
     private final Graph graph;
-
+    // convert users graph into visualization graph
     public Vizualizer(User[] users) {
         System.setProperty("org.graphstream.ui", "swing");
 
@@ -68,11 +72,11 @@ public class Vizualizer {
         });
         
     }
-
+    //show the graph
     public void show() {
         graph.display();
     }
-
+    // testbench
     public static void main(String[] args) {
 
         User[] users = new User[26];
