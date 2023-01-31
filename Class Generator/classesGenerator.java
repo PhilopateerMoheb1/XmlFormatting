@@ -40,7 +40,16 @@ public class classesGenerator {
                 throw new IllegalArgumentException("Invalid XML");
             }
         }
-        return users;
+        ArrayList<User>NewUsers=new ArrayList<User>();
+         ArrayList<Integer>IDS=new ArrayList<Integer>();
+
+         for (int i=0;i<users.size();i++){
+             if(!IDS.contains(users.get(i).getID())){
+                 IDS.add(users.get(i).getID());
+                 NewUsers.add(users.get(i));//to remove duplicate users
+             }
+        }
+        return NewUsers;
     }
     ArrayList<Post> generatePosts(TreeNode node,ArrayList<Post>posts,Post post){
         if(node.getName().equals("<post>")){
@@ -65,26 +74,32 @@ public class classesGenerator {
         return posts;
     }
 
-    ArrayList<User> generatefollowers(TreeNode node,ArrayList<User>users){
-        if(node.getName().equals("<follower>"))
-        {
-            for (int i=0;i<node.getChilds().size();i++) {
-                String defaultName="Social Network"+defaultNameNumber;
+    ArrayList<User> generatefollowers(TreeNode node,ArrayList<User>users) {
+        if (node.getName().equals("<follower>")) {
+            for (int i = 0; i < node.getChilds().size(); i++) {
+                String defaultName = "Social Network" + defaultNameNumber;
                 defaultNameNumber++;
                 User user = new User(0, defaultName);//null and 0 need to be initialize
-                //if (node.getChilds().get(i).getName().equals("<user>")) {
-                   // ArrayList<TreeNode> treeNodesChilds = node.getChilds().get(i).getChilds();
-                   // for (int j = 0; j < treeNodesChilds.size(); j++) {
-                if (node.getChilds().get(i).getName().equals("id")) {
-                    user.setID(Integer.parseInt(node.getChilds().get(i).getData()));
-                } else if (node.getChilds().get(i).getName().equals("name")) {
-                    user.setName(node.getChilds().get(i).getData());
+                if ((i + 1) < node.getChilds().size()) {
+                    if (node.getChilds().get(i).getName().equals("id") && node.getChilds().get(i + 1).getName().equals("name")) {
+                        user.setID(Integer.parseInt(node.getChilds().get(i).getData()));
+                        user.setName(node.getChilds().get(i + 1).getData());
+                        users.add(user);
+                        continue;
+                    } else if (node.getChilds().get(i).getName().equals("name") && node.getChilds().get(i + 1).getName().equals("id")) {
+                        user.setName(node.getChilds().get(i).getData());
+                        user.setID(Integer.parseInt(node.getChilds().get(i + 1).getData()));
+                        users.add(user);
+                        continue;
+                    }
+                } else {
+                    if (node.getChilds().get(i).getName().equals("id")&&node.getChilds().size()==1) {
+                        user.setID(Integer.parseInt(node.getChilds().get(i).getData()));
+                        users.add(user);
+                        continue;
+                    }
                 }
-                //}
-                //}
-                users.add(user);
             }
-
             return users;
         }
         for (int i=0;i<node.getChilds().size();i++){
