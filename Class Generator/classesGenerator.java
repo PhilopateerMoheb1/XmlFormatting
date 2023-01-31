@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class classesGenerator {
         Tree tree=new Tree(xmlChecker);
         tree.TreeReady();
         TreeNode treeNode=tree.getRoot();
+         ArrayList<Integer>IDs=new ArrayList<Integer>();
         ArrayList<TreeNode>treeNodes=treeNode.getChilds().get(0).getChilds();
         for (int i=0;i<treeNodes.size();i++){
             if(treeNodes.get(i).getName().equals("<user>")){
@@ -17,7 +19,9 @@ public class classesGenerator {
                 ArrayList<TreeNode>treeNodesChilds=treeNodes.get(i).getChilds();
                 for (int j=0;j<treeNodesChilds.size();j++){
                     if(treeNodesChilds.get(j).getName().equals("id")){
-                        user.setID(Integer.parseInt(treeNodesChilds.get(j).getData()));
+                        Integer id=Integer.parseInt(treeNodesChilds.get(j).getData());
+                        user.setID(id);
+                        IDs.add(id);
                     }
                     else if (treeNodesChilds.get(j).getName().equals("name")){
                         user.setName(treeNodesChilds.get(j).getData());
@@ -33,23 +37,24 @@ public class classesGenerator {
                     }
                 }
                 users.add(user);
-                users.addAll(user.getFollowersListCopy());
                 continue;
             }
             else{
                 throw new IllegalArgumentException("Invalid XML");
             }
         }
-        ArrayList<User>NewUsers=new ArrayList<User>();
-         ArrayList<Integer>IDS=new ArrayList<Integer>();
-
-         for (int i=0;i<users.size();i++){
-             if(!IDS.contains(users.get(i).getID())){
-                 IDS.add(users.get(i).getID());
-                 NewUsers.add(users.get(i));//to remove duplicate users
-             }
+        for (int i=0;i<users.size();i++){
+            ArrayList<User>followers=users.get(i).getFollowersListCopy();
+            ArrayList<User>NewFollowers=new ArrayList<User>();
+            for (int j=0;j<followers.size();j++){
+                if(IDs.contains(followers.get(j).getID())){
+                    NewFollowers.add(users.get(IDs.indexOf(followers.get(j).getID())));
+                }
+            }
+            users.get(i).setFollowers(NewFollowers);
         }
-        return NewUsers;
+
+        return users;
     }
     ArrayList<Post> generatePosts(TreeNode node,ArrayList<Post>posts,Post post){
         if(node.getName().equals("<post>")){
