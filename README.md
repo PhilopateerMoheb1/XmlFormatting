@@ -5,8 +5,7 @@ ASU ENG CSE senior1 Datas tructure and algorithms project
 
 | Name                    | Code     | github account    |contribution    |
 | ----------------------- | -------- | ----------------- | -------------- |
-| Ghaith Bassam Zaza      | 1901458  |Ghaith-Bassam-Zaza |• Compression   |
-|                         |          |                   |• Decompression |
+| Ghaith Bassam Zaza      | 1901458  |Ghaith-Bassam-Zaza |• Compression & Decompression |
 |                         |          |                   |• minifying     |
 |                         |          |                   |• UML           |
 |                         |          |                   |• network visualization |
