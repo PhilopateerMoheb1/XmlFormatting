@@ -16,6 +16,7 @@ ASU ENG CSE senior1 Datas tructure and algorithms project
 |                         |          |                   |• xml checking & correcting|
 |                         |          |                   |• Document organization |
 |                         |          |                   |• post-search   |
+|                         |          |                   |• support for undo and redo operations  |
 |||||
 | Philopateer Moheb Fouad | 1901202  |PhilopateerMoheb1  |• JSON Converter|
 |                         |          |                   |• Tree and TreeNode classes |
