@@ -3,6 +3,9 @@ import Phase1.Post;
 import Phase1.User;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import phase2.NetworkAnalysis;
 import phase2.PostSearch;
 import phase2.Vizualizer;
@@ -14,17 +17,75 @@ import phase2.Vizualizer;
 /**
  *
  * @author SHEREF ZEDAN
+ * 
+ * @fix&Edits Ghaith Bassam Zaza
  */
 public class part2 extends javax.swing.JFrame {
 
-    private User[] user1;
+    private final User[] users;
+    private final Vizualizer viz;
+    private final NetworkAnalysis analysis;
 
     /**
      * Creates new form part2
+     *
+     * @param users
      */
-    public part2(User[] user) {
+    private class comboItem {
+
+        private User user = null;
+        private String title = null;
+
+        public comboItem(User user) {
+            this.user = user;
+
+        }
+
+        public comboItem(String title) {
+            this.title = title;
+
+        }
+
+        @Override
+        public String toString() {
+            if (user == null) {
+                return title;
+            }
+            return user.getName();
+        }
+
+        public User getValue() {
+
+            return user;
+        }
+    }
+
+    public part2(User[] users) {
         initComponents();
-        user1 = user;
+        this.users = users;
+        this.viz = new Vizualizer(users);
+        this.analysis = new NetworkAnalysis(users);
+
+        Vector comboBoxItems = new Vector();
+        comboBoxItems.add(new comboItem("User 2 to get mutuals"));
+        for (User user : users) {
+            comboBoxItems.add(new comboItem(user));
+        }
+        final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
+        mutual2.setModel(model);
+        fillCombo(mutual1, "User 1 to get mutuals", users);
+        fillCombo(mutual2, "User 2 to get mutuals", users);
+        fillCombo(suggestionUser, "User to get suggestions", users);
+    }
+
+    final void fillCombo(JComboBox cb, String title, User[] users) {
+        Vector comboBoxItems = new Vector();
+        comboBoxItems.add(new comboItem(title));
+        for (User user : users) {
+            comboBoxItems.add(new comboItem(user));
+        }
+        final DefaultComboBoxModel model = new DefaultComboBoxModel(comboBoxItems);
+        cb.setModel(model);
     }
 
     /**
@@ -34,7 +95,7 @@ public class part2 extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         Search = new javax.swing.JButton();
@@ -45,15 +106,14 @@ public class part2 extends javax.swing.JFrame {
         Vizualizer = new javax.swing.JButton();
         GetMutul = new javax.swing.JButton();
         Analysis = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        mutual2 = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        mutul1 = new javax.swing.JTextArea();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        AnalysisText = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        sugButton = new javax.swing.JButton();
+        mutual2 = new javax.swing.JComboBox<>();
+        mutual1 = new javax.swing.JComboBox<>();
+        suggestionUser = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("analysis");
+        setResizable(false);
 
         Search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Search.setForeground(new java.awt.Color(51, 51, 255));
@@ -64,10 +124,12 @@ public class part2 extends javax.swing.JFrame {
             }
         });
 
-        searchText.setColumns(20);
-        searchText.setRows(5);
+        searchText.setColumns(30);
+        searchText.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        searchText.setRows(1);
         jScrollPane1.setViewportView(searchText);
 
+        output.setEditable(false);
         output.setColumns(20);
         output.setRows(5);
         jScrollPane2.setViewportView(output);
@@ -83,7 +145,7 @@ public class part2 extends javax.swing.JFrame {
 
         GetMutul.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         GetMutul.setForeground(new java.awt.Color(51, 51, 255));
-        GetMutul.setText("GetMutul");
+        GetMutul.setText("Get mutuals");
         GetMutul.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GetMutulActionPerformed(evt);
@@ -99,196 +161,224 @@ public class part2 extends javax.swing.JFrame {
             }
         });
 
-        mutual2.setColumns(20);
-        mutual2.setRows(5);
-        jScrollPane3.setViewportView(mutual2);
-
-        mutul1.setColumns(20);
-        mutul1.setRows(5);
-        jScrollPane4.setViewportView(mutul1);
-
-        AnalysisText.setColumns(20);
-        AnalysisText.setRows(5);
-        jScrollPane5.setViewportView(AnalysisText);
-
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 255));
-        jButton1.setText("getSuggerstions");
-        jButton1.setSelected(true);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        sugButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        sugButton.setForeground(new java.awt.Color(51, 51, 255));
+        sugButton.setText("getSuggerstions");
+        sugButton.setSelected(true);
+        sugButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                sugButtonActionPerformed(evt);
             }
         });
+
+        mutual2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mutual2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        mutual1.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        mutual1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        suggestionUser.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        suggestionUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(GetMutul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Vizualizer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Analysis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addComponent(mutual1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(mutual2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(GetMutul, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                            .addComponent(Analysis, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Vizualizer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(suggestionUser, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sugButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(Vizualizer, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(GetMutul, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Analysis, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(GetMutul, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mutual2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mutual1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(suggestionUser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sugButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Analysis, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Vizualizer, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        try {
-            output.setText(null);
-            String f = searchText.getText();
-            if (f == null || f.isBlank()) {
-                output.append("please insert text to search\n");
-                output.setForeground(Color.red);
-                return;
-            }
-            PostSearch x = new PostSearch();
-            x.searchForPost(user1, f);
-            ArrayList<Post> p = x.getPosts();
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {                                       
+
+        output.setText(null);
+        String f = searchText.getText();
+        if (f == null || f.isBlank()) {
+            output.append("please insert text to search!\n");
+            output.setForeground(Color.red);
+            return;
+        }
+        PostSearch x = new PostSearch();
+        x.searchForPost(users, f);
+        ArrayList<Post> p = x.getPosts();
+        if (p.isEmpty()) {
+            output.append("no result found!\n");
+            output.setForeground(Color.red);
+
+        } else {
             for (int i = 0; i < p.size(); i++) {
-                output.append(p.get(i).toString() + "\n");
-                output.setForeground(Color.green);
+                output.append(p.get(i).toString() + "\n--------------------------------------\n");
             }
-        } catch (Exception e) {
-            output.append(e.toString());
-            output.setForeground(Color.red);
+            output.setForeground(Color.BLACK);
         }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SearchActionPerformed
 
-    private void VizualizerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VizualizerActionPerformed
-        try {
-            Vizualizer v = new Vizualizer(user1);
-            v.show();
+    }                                      
 
-            output.setForeground(Color.green);
-        } catch (Exception e) {
-            output.append(e.toString());
+    private void VizualizerActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        viz.show();
+    }                                          
+
+    private void GetMutulActionPerformed(java.awt.event.ActionEvent evt) {                                         
+
+        output.setText(null);
+        /*   String r = mutual1.getText();
+        String s = mutual2.getText();
+        if ((r == null || r.isBlank()) || (s == null || s.isBlank())) {
+            output.append("please insert text to mutual\n");
             output.setForeground(Color.red);
+            return;
         }
-// TODO add your handling code here:
-    }//GEN-LAST:event_VizualizerActionPerformed
-
-    private void GetMutulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GetMutulActionPerformed
-        try {
-            output.setText(null);
-            String r = mutul1.getText();
-            String s = mutual2.getText();
-            if ((r == null || r.isBlank()) && (s == null || s.isBlank())) {
-                output.append("please insert text to mutul\n");
-                output.setForeground(Color.red);
-                return;
+        User user1 = null;
+        User user2 = null;
+        for (User user : users) {
+            if (user.getName().equals(r)) {
+                user1 = user;
             }
-
-            User user2 = new User(1, r);
-            User user3 = new User(2, s);
-            NetworkAnalysis ne = new NetworkAnalysis();
-            output.append(ne.getMutul(user2, user3).toString());
-            output.setForeground(Color.green);
-        } catch (Exception e) {
-            output.append(e.toString());
-            output.setForeground(Color.red);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_GetMutulActionPerformed
-
-    private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnalysisActionPerformed
-        try {
-            output.setText(null);
-            NetworkAnalysis ne = new NetworkAnalysis();
-
-            AnalysisText.append("topActive\n" + ne.getTopActive(user1).toString() + "\n");
-            AnalysisText.append("topInfluencer\n" + ne.getTopInfluencer(user1).toString() + "\n");
-            AnalysisText.setForeground(Color.green);
-        } catch (Exception e) {
-            output.append(e.toString());
-            output.setForeground(Color.red);
-        }
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AnalysisActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            output.setText(null);
-            String r = mutul1.getText();
-            if (r == null || r.isBlank()) {
-                output.append("please insert text to search\n");
-                output.setForeground(Color.red);
-                return;
+            if (user.getName().equals(s)) {
+                user2 = user;
             }
-            User user2 = new User(1, r);
-            NetworkAnalysis ne = new NetworkAnalysis();
-            output.append(ne.getSuggerstions(user2).toString() + "\n");
-            output.setForeground(Color.green);
-        } catch (Exception e) {
-            output.append(e.toString());
+            if(user1!=null&&user2!=null){
+                break;
+            }
+        }*/
+        User user1 = ((comboItem) mutual1.getSelectedItem()).getValue();
+        User user2 = ((comboItem) mutual2.getSelectedItem()).getValue();
+        if (user1 == null || user2 == null) {
+            output.append("please insert text to mutual\n");
             output.setForeground(Color.red);
+            return;
         }
+        User[] mutuals = analysis.getMutual(user1, user2);
+        if (mutuals == null || mutuals.length == 0) {
+            output.append("no mutual follower found!");
+            output.setForeground(Color.red);
+            return;
+        }
+        output.append("Mutual follower:");
+        for (User user : mutuals) {
+            output.append("\nName: " + user.getName() + ", ID: " + user.getID());
+        }
+        output.setForeground(Color.black);
+
+
+    }                                        
+
+    private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {                                         
+
+        output.setText(null);
+
+        User TA = analysis.getTopActive();
+        User TI = analysis.getTopinfluencer();
+        output.append("Top Influencer: ");
+        output.append("\nName: " + TI.getName() + ", ID: " + TI.getID());
+        output.append("\nTop Active: ");
+        output.append("\nName: " + TA.getName() + ", ID: " + TA.getID());
+        output.setForeground(Color.black);
+    }                                        
+
+    private void sugButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+
+        output.setText(null);
+
+        /*String r = sugestionsUser.getText();
+        if (r == null || r.isBlank()) {
+            output.append("please insert text to look for suggestions!\n");
+            output.setForeground(Color.red);
+            return;
+        }
+        User user1 = null;
+        for (User user : users) {
+            if (user.getName().equals(r)) {
+                user1 = user;
+                break;
+            }
+        }*/
+        User user1 = ((comboItem) suggestionUser.getSelectedItem()).getValue();
+        if (user1 == null) {
+            output.append("please insert text to look for suggestions!\n");
+            output.setForeground(Color.red);
+            return;
+        }
+        User[] sug = analysis.getSuggerstions(user1);
+        if (sug == null || sug.length == 0) {
+            output.append("no mutual follower found!");
+            output.setForeground(Color.red);
+            return;
+        }
+        output.append("Suggestions:");
+        for (User user : sug) {
+            output.append("\nName: " + user.getName() + ", ID: " + user.getID());
+        }
+        output.setForeground(Color.black);
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }                                         
 
     /**
      * @param args the command line arguments
      */
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton Analysis;
-    private javax.swing.JTextArea AnalysisText;
     private javax.swing.JButton GetMutul;
     private javax.swing.JButton Search;
     private javax.swing.JButton Vizualizer;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea mutual2;
-    private javax.swing.JTextArea mutul1;
+    private javax.swing.JComboBox<String> mutual1;
+    private javax.swing.JComboBox<String> mutual2;
     private javax.swing.JTextArea output;
     private javax.swing.JTextArea searchText;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JButton sugButton;
+    private javax.swing.JComboBox<String> suggestionUser;
+    // End of variables declaration                   
 }
