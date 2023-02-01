@@ -20,6 +20,10 @@ public class User implements Item {
     public String getName() {
         return name;
     }
+    
+    public int getFollowersCount(){
+        return followers.size();
+    }
 
     public void setID(int ID) {
         this.ID = ID;
@@ -34,7 +38,10 @@ public class User implements Item {
         postsTemp.addAll(posts);
         return postsTemp;
     }
-
+    public int getFollowersListSize()
+        {
+            return followers.size();
+        }
     public ArrayList<User> getFollowersListCopy() {
         ArrayList<User> followersTemp =new ArrayList<>();
         followersTemp.addAll(followers);
