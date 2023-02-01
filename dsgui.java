@@ -530,22 +530,27 @@ public class dsgui extends javax.swing.JFrame {
     }                                     
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        try {
+            outputArea.setText(null);
+            XMLChecker generate = new XMLChecker(Deformatter.deformate(inputArea.getText()));
+            generate.Check();
+            generate.correct();
+            XMLChecker generate2 = new XMLChecker(Deformatter.deformate(generate.getCorrectXML()));
+            classesGenerator v = new classesGenerator();
+            ArrayList user1 = v.generate(generate2);
+            users = (User[]) user1.toArray(User[]::new);
+            boolean generframe = generate2.isCorrect();
 
-        XMLChecker generate = new XMLChecker(Deformatter.deformate(inputArea.getText()));
-        generate.Check();
-        generate.correct();
-        XMLChecker generate2 = new XMLChecker(Deformatter.deformate(generate.getCorrectXML()));
-        classesGenerator v = new classesGenerator();
-        ArrayList user1 = v.generate(generate2);
-        users = (User[]) user1.toArray(User[]::new);
-        boolean generframe = generate2.isCorrect();
-
-        while (generframe) {
-            generframe = false;
-            part2 i = new part2(users);
-            i.setLocationRelativeTo(null);
-            i.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-            i.show();
+            while (generframe) {
+                generframe = false;
+                part2 i = new part2(users);
+                i.setLocationRelativeTo(null);
+                i.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+                i.show();
+            }
+        } catch (IllegalArgumentException e) {
+            outputArea.append("the format of the code cannot be analysed!");
+            outputArea.setForeground(Color.red);
         }
     }                                        
 
