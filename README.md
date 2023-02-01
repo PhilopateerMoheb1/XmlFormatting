@@ -11,6 +11,7 @@ ASU ENG CSE senior1 Datas tructure and algorithms project
 |                         |          |                   |• UML           |
 |                         |          |                   |• network visualization |
 |                         |          |                   |• binary-string vice versa converters |
+|                         |          |                   |• GUI           |
 |||||
 | Mina Mounir Farid       | 1901384  |Mina-Mounir-Farid  |• stack  class  |
 |                         |          |                   |• xml checking & correcting|
