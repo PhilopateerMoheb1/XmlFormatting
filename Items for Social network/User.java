@@ -20,6 +20,10 @@ public class User implements Item {
     public String getName() {
         return name;
     }
+    
+    public int getFollowersCount(){
+        return followers.size();
+    }
 
     public void setID(int ID) {
         this.ID = ID;
