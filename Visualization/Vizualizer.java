@@ -1,6 +1,11 @@
 
+package phase2;
+
+
+import Phase1.User;
 import org.graphstream.graph.*;
 import org.graphstream.graph.implementations.*;
+import org.graphstream.ui.view.Viewer;
 
 /**
  *
@@ -13,10 +18,10 @@ public class Vizualizer {
      */
     
     // size setting adjustments
-    private static final int sizeMin = 30;
-    private static final int degreeScale = 5;
-    private static final int TxtSizeMin = 10;
-    private static final int TxtDegreeScale = 3;
+    private static final int sizeMin = 50;
+    private static final int degreeScale = 8;
+    private static final int TxtSizeMin = 8;
+    private static final int TxtDegreeScale = 2;
     
     // graph css stylesheet
     protected static String styleSheet = """
@@ -74,7 +79,9 @@ public class Vizualizer {
     }
     //show the graph
     public void show() {
-        graph.display();
+        Viewer v = graph.display();
+        v.setCloseFramePolicy(Viewer.CloseFramePolicy.CLOSE_VIEWER);
+        
     }
     // testbench
     public static void main(String[] args) {
