@@ -1,5 +1,4 @@
 
-
 import static Phase1.Compressor.compress;
 import static Phase1.Compressor.expand;
 import Phase1.Deformatter;
@@ -22,17 +21,13 @@ import java.util.logging.Logger;
 import java.util.*;
 import javax.swing.JFileChooser;
 import phase2.Vizualizer;
-//1,3,7
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 /**
  *
  * @author SHEREF ZEDAN
  *
  * @fix&Edits Ghaith Bassam Zaza
+ * @support Undo &Redo Mina Mounir Farid
  */
 public class dsgui extends javax.swing.JFrame {
 
@@ -42,9 +37,13 @@ public class dsgui extends javax.swing.JFrame {
      */
     Xmfile x1;
     XMLChecker checker;
-
+    Stack undo , redo ,inputStack,outputStack;
     public dsgui() {
         initComponents();
+        undo = new Stack() ;
+        redo =  new Stack() ;
+        inputStack = new Stack() ;
+        outputStack = new Stack() ;
 
     }
 
@@ -81,6 +80,8 @@ public class dsgui extends javax.swing.JFrame {
         MINIFY = new javax.swing.JButton();
         clear = new javax.swing.JButton();
         Analysis = new javax.swing.JButton();
+        clear1 = new javax.swing.JButton();
+        clear2 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -132,6 +133,7 @@ public class dsgui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("XML EDITOR");
+        setResizable(false);
 
         TOJSON.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         TOJSON.setForeground(new java.awt.Color(51, 51, 255));
@@ -253,6 +255,28 @@ public class dsgui extends javax.swing.JFrame {
             }
         });
 
+        clear1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clear1.setForeground(new java.awt.Color(51, 51, 255));
+        clear1.setText("REDO");
+        clear1.setMaximumSize(new java.awt.Dimension(70, 30));
+        clear1.setMinimumSize(new java.awt.Dimension(70, 30));
+        clear1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                redoActionPerformed(evt);
+            }
+        });
+
+        clear2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clear2.setForeground(new java.awt.Color(51, 51, 255));
+        clear2.setText("UNDO");
+        clear2.setMaximumSize(new java.awt.Dimension(70, 30));
+        clear2.setMinimumSize(new java.awt.Dimension(70, 30));
+        clear2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                undoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -264,24 +288,29 @@ public class dsgui extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1019, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CORRECT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(FORMAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(TOJSON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CHECK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(COMPRESS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(MINIFY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(EXPAND, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(OPEN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Analysis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(CORRECT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(FORMAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(TOJSON, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(CHECK, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(COMPRESS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(MINIFY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(EXPAND, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(OPEN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Analysis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(clear1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(clear2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(OPEN, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -300,10 +329,14 @@ public class dsgui extends javax.swing.JFrame {
                         .addComponent(TOJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Analysis, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clear2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(clear1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(clear, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -314,7 +347,7 @@ public class dsgui extends javax.swing.JFrame {
     }// </editor-fold>                        
 
     private void OPENActionPerformed(java.awt.event.ActionEvent evt) {                                     
-
+        undo.push("open");
         outputArea.setText(null);
         OPEN.setText("OPEN FILE");
         try {
@@ -345,11 +378,13 @@ public class dsgui extends javax.swing.JFrame {
 
 
     }                                    
-
+       
     private void FORMATActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        undo.push("format");
         outputArea.setText(null);
 
         String s = inputArea.getText();
+        inputStack.push(s);
         if (s == null || s.isBlank()) {
             outputArea.append("please insert text to format\n");
             outputArea.setForeground(Color.red);
@@ -364,6 +399,7 @@ public class dsgui extends javax.swing.JFrame {
 
     private void COMPRESSActionPerformed(java.awt.event.ActionEvent evt) {                                         
         try {
+            undo.push("compress");
             outputArea.setText(null);
             String str = inputArea.getText();
             if (str == null || str.isBlank()) {
@@ -374,6 +410,7 @@ public class dsgui extends javax.swing.JFrame {
             fc.showSaveDialog(jPanel1);
             File file = fc.getSelectedFile();
             file = new File(file.toString() + ".z");
+            inputStack.push(file) ;
             String com = compress(str);
             FileWriter fw;
 
@@ -393,9 +430,11 @@ public class dsgui extends javax.swing.JFrame {
 
     private void CORRECTActionPerformed(java.awt.event.ActionEvent evt) {                                        
         outputArea.setText(null);
+        undo.push("correct") ;
         try {
             String[] v = null;
             checker.Check();
+            inputStack.push(inputArea.getText());
             checker.correct();
             int i = checker.getErrorCount();
             v = checker.getErrors();
@@ -418,6 +457,7 @@ public class dsgui extends javax.swing.JFrame {
     }                                       
 
     private void EXPANDActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        undo.push("expand");
         outputArea.setText(null);
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(jPanel1);
@@ -445,14 +485,17 @@ public class dsgui extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
         } catch (StringIndexOutOfBoundsException e) {
-            outputArea.append("expantion failed your file might be damaged.");
+            outputArea.append("expansion failed your file might be damaged.");
+             outputArea.setForeground(Color.red);
         }
 
     }                                      
 
     private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        undo.push("TOJSON");
         outputArea.setText(null);
         String v = inputArea.getText();
+        inputStack.push(v) ;
         if (v == null || v.isBlank()) {
             outputArea.append("please insert text to convert\n");
             return;
@@ -462,10 +505,12 @@ public class dsgui extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(jPanel1);
         File file = fc.getSelectedFile();
+        
         if (file == null) {
             return;
         }
         file = new File(file.toString() + ".json");
+        inputStack.push(file);
         FileWriter fw;
         try {
             fw = new FileWriter(file);
@@ -479,6 +524,7 @@ public class dsgui extends javax.swing.JFrame {
     }                                      
 
     private void CHECKActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        undo.add("check");
         outputArea.setText(null);
         if (inputArea.getText().isBlank()) {
             outputArea.append("no text found!");
@@ -506,11 +552,12 @@ public class dsgui extends javax.swing.JFrame {
             outputArea.setForeground(Color.red);
         }
     }                                     
-
+   
     private void MINIFYActionPerformed(java.awt.event.ActionEvent evt) {                                       
-
-        outputArea.setText(null);
+        undo.add("minify") ;
+       outputArea.setText(null);
         String c = inputArea.getText();
+        inputStack.push(c) ;
         if (c == null || c.isBlank()) {
             outputArea.append("please insert text to minify\n");
             outputArea.setForeground(Color.red);
@@ -520,13 +567,17 @@ public class dsgui extends javax.swing.JFrame {
         outputArea.append("xml minified successfully\n");
         inputArea.setText(c);
         outputArea.setForeground(Color.decode("#5EBA7D"));
-
     }                                      
-
-    private void clearActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void clearCommand()
+    { 
+        inputStack.push(inputArea.getText());
+        outputStack.push(outputArea.getText());
         inputArea.setText(null);
         outputArea.setText(null);
-        // TODO add your handling code here:
+    }
+    private void clearActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        undo.add("clear");
+        clearCommand();
     }                                     
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {                                         
@@ -555,9 +606,124 @@ public class dsgui extends javax.swing.JFrame {
     }                                        
 
     private void inputAreaKeyPressed(java.awt.event.KeyEvent evt) {                                     
+       
         CORRECT.setEnabled(false);
         Analysis.setEnabled(false);
         TOJSON.setEnabled(false);
+    }                                    
+
+    private void redoActionPerformed(java.awt.event.ActionEvent evt) {                                     
+          try
+          { 
+              String command = (String) (redo.pop());
+            undo.push(command);
+            switch(command)
+            { 
+                case "format": 
+                    FORMATActionPerformed(evt);
+                    break;
+                case "minify":
+                    MINIFYActionPerformed(evt);
+                    break ;
+                case "correct":
+                    CORRECTActionPerformed(evt);
+                    break;
+                case "check":
+                    CHECKActionPerformed(evt);
+                    break;
+                case "open":
+                    OPENActionPerformed(evt);
+                    break;
+                case "expand":
+                    EXPANDActionPerformed(evt);
+                    break;
+                case "clear":
+                    clearActionPerformed(evt);
+                    break;
+                case "TOJSON":
+                    TOJSONActionPerformed(evt);
+                    break;
+                case "compressed":
+                    TOJSONActionPerformed(evt);
+                    break;
+                default:
+                    inputArea.setText((String)(inputStack.pop()));
+            }
+          }catch(RuntimeException e)
+          { 
+            outputArea.setText("redo operation is not possible yet\n");
+            outputArea.setForeground(Color.red);
+          }
+            
+    }                                    
+
+    private void undoActionPerformed(java.awt.event.ActionEvent evt) {                                     
+        try
+        { 
+            String command = (String) (undo.pop());
+            redo.push(command);
+        switch(command)
+        { 
+            case "format":
+            case "minify":
+            case "correct":    
+               inputArea.setText((String)(inputStack.pop()));
+               outputArea.setText(null);
+                break;
+            case "check": 
+                outputArea.setText(null);
+                TOJSON.setEnabled(false);
+                Analysis.setEnabled(false);
+                CORRECT.setEnabled(false);
+                break ;
+            case "open":
+            case "expand":    
+                clearCommand() ;
+                break ;
+            case "clear":
+                inputArea.setText((String)(inputStack.pop()));
+                outputArea.setText((String)(outputStack.pop()));
+                break;
+            case "TOJSON":
+                File f = (File)(inputStack.pop());
+                inputArea.setText((String)(inputStack.pop()));
+                outputArea.setText(null);
+                              
+                if(f.delete()) 
+                { 
+                    outputArea.setText("JSON file deleted\n");
+                    outputArea.setForeground(Color.green);
+                }
+                else
+                { 
+                   outputArea.setText("JSON file deletion failed\n");
+                    outputArea.setForeground(Color.red); 
+                }
+                break;
+            case "compress":
+                 File fi = (File)(inputStack.pop());
+                 if(fi.delete()) 
+                { 
+                    outputArea.setText("compressed file deleted\n");
+                    outputArea.setForeground(Color.green);
+                }
+                else
+                { 
+                   outputArea.setText("compressed file deletion failed\n");
+                    outputArea.setForeground(Color.red); 
+                }
+                break;
+                         
+        }
+        }
+        
+        catch(RuntimeException e)
+        { 
+            outputArea.setText("undo operation is not possible yet\n");
+            outputArea.setForeground(Color.red);
+        }
+        
+        
     }                                    
 
     /**
@@ -610,6 +776,8 @@ public class dsgui extends javax.swing.JFrame {
     private javax.swing.JButton TOJSON;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton clear;
+    private javax.swing.JButton clear1;
+    private javax.swing.JButton clear2;
     private javax.swing.JTextArea inputArea;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFrame jFrame1;
