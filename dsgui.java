@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.*;
 import javax.swing.JFileChooser;
-import phase2.Vizualizer;
 
 /**
  *
@@ -37,13 +36,14 @@ public class dsgui extends javax.swing.JFrame {
      */
     Xmfile x1;
     XMLChecker checker;
-    Stack undo , redo ,inputStack,outputStack;
+    Stack undo, redo, inputStack, outputStack;
+
     public dsgui() {
         initComponents();
-        undo = new Stack() ;
-        redo =  new Stack() ;
-        inputStack = new Stack() ;
-        outputStack = new Stack() ;
+        undo = new Stack();
+        redo = new Stack();
+        inputStack = new Stack();
+        outputStack = new Stack();
 
     }
 
@@ -282,9 +282,9 @@ public class dsgui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 991, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -346,7 +346,7 @@ public class dsgui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void OPENActionPerformed(java.awt.event.ActionEvent evt) { 
+    private void OPENActionPerformed(java.awt.event.ActionEvent evt) {                                     
         redo.clear();
         undo.push("open");
         outputArea.setText(null);
@@ -379,8 +379,8 @@ public class dsgui extends javax.swing.JFrame {
 
 
     }                                    
-       
-    private void FORMATActionPerformed(java.awt.event.ActionEvent evt) {  
+
+    private void FORMATActionPerformed(java.awt.event.ActionEvent evt) {                                       
         redo.clear();
         undo.push("format");
         outputArea.setText(null);
@@ -401,19 +401,25 @@ public class dsgui extends javax.swing.JFrame {
 
     private void COMPRESSActionPerformed(java.awt.event.ActionEvent evt) {                                         
         try {
-            redo.clear();
             undo.push("compress");
             outputArea.setText(null);
             String str = inputArea.getText();
             if (str == null || str.isBlank()) {
                 outputArea.append("please insert text to compress\n");
+                outputArea.setForeground(Color.black);
                 return;
             }
             JFileChooser fc = new JFileChooser();
             fc.showSaveDialog(jPanel1);
             File file = fc.getSelectedFile();
+            if (file == null) {
+
+                outputArea.append("no file selected\n");
+                outputArea.setForeground(Color.black);
+                return;
+            }
             file = new File(file.toString() + ".z");
-            inputStack.push(file) ;
+            inputStack.push(file);
             String com = compress(str);
             FileWriter fw;
 
@@ -431,10 +437,10 @@ public class dsgui extends javax.swing.JFrame {
 
     }                                        
 
-    private void CORRECTActionPerformed(java.awt.event.ActionEvent evt) {          
+    private void CORRECTActionPerformed(java.awt.event.ActionEvent evt) {                                        
         redo.clear();
         outputArea.setText(null);
-        undo.push("correct") ;
+        undo.push("correct");
         try {
             String[] v = null;
             checker.Check();
@@ -460,7 +466,7 @@ public class dsgui extends javax.swing.JFrame {
         }
     }                                       
 
-    private void EXPANDActionPerformed(java.awt.event.ActionEvent evt) {  
+    private void EXPANDActionPerformed(java.awt.event.ActionEvent evt) {                                       
         redo.clear();
         undo.push("expand");
         outputArea.setText(null);
@@ -468,6 +474,8 @@ public class dsgui extends javax.swing.JFrame {
         fc.showOpenDialog(jPanel1);
         File file = fc.getSelectedFile();
         if (file == null) {
+            outputArea.append("no file selected\n");
+            outputArea.setForeground(Color.black);
             return;
         }
         String[] name = file.getName().split("\\.");
@@ -480,7 +488,6 @@ public class dsgui extends javax.swing.JFrame {
         try {
 
             com = new String(Files.readAllBytes(file.toPath()));
-            System.out.println(com);
             inputArea.setText(expand(com));
             outputArea.append("expanded " + file.getName() + " successfully\n");
             outputArea.setForeground(Color.decode("#5EBA7D"));
@@ -491,17 +498,17 @@ public class dsgui extends javax.swing.JFrame {
             Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
         } catch (StringIndexOutOfBoundsException e) {
             outputArea.append("expansion failed your file might be damaged.");
-             outputArea.setForeground(Color.red);
+            outputArea.setForeground(Color.red);
         }
 
     }                                      
 
-    private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) { 
+    private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) {                                       
         redo.clear();
         undo.push("TOJSON");
         outputArea.setText(null);
         String v = inputArea.getText();
-        inputStack.push(v) ;
+        inputStack.push(v);
         if (v == null || v.isBlank()) {
             outputArea.append("please insert text to convert\n");
             return;
@@ -511,7 +518,7 @@ public class dsgui extends javax.swing.JFrame {
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(jPanel1);
         File file = fc.getSelectedFile();
-        
+
         if (file == null) {
             return;
         }
@@ -529,7 +536,7 @@ public class dsgui extends javax.swing.JFrame {
         outputArea.setForeground(Color.decode("#5EBA7D"));
     }                                      
 
-    private void CHECKActionPerformed(java.awt.event.ActionEvent evt) {      
+    private void CHECKActionPerformed(java.awt.event.ActionEvent evt) {                                      
         redo.clear();
         undo.add("check");
         outputArea.setText(null);
@@ -559,13 +566,13 @@ public class dsgui extends javax.swing.JFrame {
             outputArea.setForeground(Color.red);
         }
     }                                     
-   
-    private void MINIFYActionPerformed(java.awt.event.ActionEvent evt) {   
+
+    private void MINIFYActionPerformed(java.awt.event.ActionEvent evt) {                                       
         redo.clear();
-        undo.add("minify") ;
-       outputArea.setText(null);
+        undo.add("minify");
+        outputArea.setText(null);
         String c = inputArea.getText();
-        inputStack.push(c) ;
+        inputStack.push(c);
         if (c == null || c.isBlank()) {
             outputArea.append("please insert text to minify\n");
             outputArea.setForeground(Color.red);
@@ -576,8 +583,7 @@ public class dsgui extends javax.swing.JFrame {
         inputArea.setText(c);
         outputArea.setForeground(Color.decode("#5EBA7D"));
     }                                      
-    private void clearCommand()
-    { 
+    private void clearCommand() {
         inputStack.push(inputArea.getText());
         outputStack.push(outputArea.getText());
         inputArea.setText(null);
@@ -591,6 +597,7 @@ public class dsgui extends javax.swing.JFrame {
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {                                         
         try {
+            redo.clear();
             outputArea.setText(null);
             XMLChecker generate = new XMLChecker(Deformatter.deformate(inputArea.getText()));
             generate.Check();
@@ -615,25 +622,23 @@ public class dsgui extends javax.swing.JFrame {
     }                                        
 
     private void inputAreaKeyPressed(java.awt.event.KeyEvent evt) {                                     
-       
+
         CORRECT.setEnabled(false);
         Analysis.setEnabled(false);
         TOJSON.setEnabled(false);
     }                                    
 
     private void redoActionPerformed(java.awt.event.ActionEvent evt) {                                     
-          try
-          { 
-              String command = (String) (redo.pop());
+        try {
+            String command = (String) (redo.pop());
             undo.push(command);
-            switch(command)
-            { 
-                case "format": 
+            switch (command) {
+                case "format":
                     FORMATActionPerformed(evt);
                     break;
                 case "minify":
                     MINIFYActionPerformed(evt);
-                    break ;
+                    break;
                 case "correct":
                     CORRECTActionPerformed(evt);
                     break;
@@ -656,83 +661,71 @@ public class dsgui extends javax.swing.JFrame {
                     TOJSONActionPerformed(evt);
                     break;
                 default:
-                    inputArea.setText((String)(inputStack.pop()));
+                    inputArea.setText((String) (inputStack.pop()));
             }
-          }catch(RuntimeException e)
-          { 
+        } catch (RuntimeException e) {
             outputArea.setText("redo operation is not possible yet\n");
             outputArea.setForeground(Color.red);
-          }
-            
+        }
+
     }                                    
 
     private void undoActionPerformed(java.awt.event.ActionEvent evt) {                                     
-        try
-        { 
+        try {
             String command = (String) (undo.pop());
             redo.push(command);
-        switch(command)
-        { 
-            case "format":
-            case "minify":
-            case "correct":    
-               inputArea.setText((String)(inputStack.pop()));
-               outputArea.setText(null);
-                break;
-            case "check": 
-                outputArea.setText(null);
-                TOJSON.setEnabled(false);
-                Analysis.setEnabled(false);
-                CORRECT.setEnabled(false);
-                break ;
-            case "open":
-            case "expand":    
-                clearCommand() ;
-                break ;
-            case "clear":
-                inputArea.setText((String)(inputStack.pop()));
-                outputArea.setText((String)(outputStack.pop()));
-                break;
-            case "TOJSON":
-                File f = (File)(inputStack.pop());
-                inputArea.setText((String)(inputStack.pop()));
-                outputArea.setText(null);
-                              
-                if(f.delete()) 
-                { 
-                    outputArea.setText("JSON file deleted\n");
-                    outputArea.setForeground(Color.green);
-                }
-                else
-                { 
-                   outputArea.setText("JSON file deletion failed\n");
-                    outputArea.setForeground(Color.red); 
-                }
-                break;
-            case "compress":
-                 File fi = (File)(inputStack.pop());
-                 if(fi.delete()) 
-                { 
-                    outputArea.setText("compressed file deleted\n");
-                    outputArea.setForeground(Color.green);
-                }
-                else
-                { 
-                   outputArea.setText("compressed file deletion failed\n");
-                    outputArea.setForeground(Color.red); 
-                }
-                break;
-                         
-        }
-        }
-        
-        catch(RuntimeException e)
-        { 
+            switch (command) {
+                case "format":
+                case "minify":
+                case "correct":
+                    inputArea.setText((String) (inputStack.pop()));
+                    outputArea.setText(null);
+                    break;
+                case "check":
+                    outputArea.setText(null);
+                    TOJSON.setEnabled(false);
+                    Analysis.setEnabled(false);
+                    CORRECT.setEnabled(false);
+                    break;
+                case "open":
+                case "expand":
+                    clearCommand();
+                    break;
+                case "clear":
+                    inputArea.setText((String) (inputStack.pop()));
+                    outputArea.setText((String) (outputStack.pop()));
+                    break;
+                case "TOJSON":
+                    File f = (File) (inputStack.pop());
+                    inputArea.setText((String) (inputStack.pop()));
+                    outputArea.setText(null);
+
+                    if (f.delete()) {
+                        outputArea.setText("JSON file deleted\n");
+                        outputArea.setForeground(Color.green);
+                    } else {
+                        outputArea.setText("JSON file deletion failed\n");
+                        outputArea.setForeground(Color.red);
+                    }
+                    break;
+                case "compress":
+                    File fi = (File) (inputStack.pop());
+                    if (fi.delete()) {
+                        outputArea.setText("compressed file deleted\n");
+                        outputArea.setForeground(Color.green);
+                    } else {
+                        outputArea.setText("compressed file deletion failed\n");
+                        outputArea.setForeground(Color.red);
+                    }
+                    break;
+
+            }
+        } catch (RuntimeException e) {
             outputArea.setText("undo operation is not possible yet\n");
             outputArea.setForeground(Color.red);
         }
-        
-        
+
+
     }                                    
 
     /**
