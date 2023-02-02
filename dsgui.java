@@ -453,7 +453,7 @@ public class dsgui extends javax.swing.JFrame {
                 outputArea.append(v[j] + "\n");
             }
             inputArea.setText(null);
-            inputArea.append(checker.getCorrectXML());
+            inputArea.append(Formatter.format(checker.getCorrectXML()));
             outputArea.append("XML corrected\n");
             outputArea.setForeground(Color.decode("#5EBA7D"));
             CORRECT.setEnabled(false);
@@ -798,22 +798,5 @@ public class dsgui extends javax.swing.JFrame {
     private javax.swing.JTextArea outputArea;
     private java.awt.Scrollbar scrollbar1;
     // End of variables declaration                   
-    private javax.swing.JButton search;
-    private javax.swing.JButton GetMutul;
-    private javax.swing.JButton GetAnalysis;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea4;
-    private javax.swing.JTextArea jTextArea5;
-    private javax.swing.JTextArea jTextArea6;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextArea jTextArea7;
-    private javax.swing.JTextArea jTextArea8;
-    private javax.swing.JButton Visuallizer;
-
-    private void openfileActionperformed(ActionEvent evt) {
-        throw new UnsupportedOperationException("Not supported yet.");
-// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
-    }
-
+    
 }
