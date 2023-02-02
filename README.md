@@ -18,13 +18,16 @@ ASU ENG CSE senior1 Datas tructure and algorithms project
 |                         |          |                   |• post-search   |
 |                         |          |                   |• support for undo and redo operations  |
 |||||
+
 | Philopateer Moheb Fouad | 1901202  |PhilopateerMoheb1  |• JSON Converter|
 |                         |          |                   |• Tree and TreeNode classes |
 |                         |          |                   |• class generator and items classes (graph) |
 |||||
+
 | Ahmed Abdelmotelb Ali   | 1901401  |AhmedAbdElmotelbAli|• GUI           |
 |                         |          |                   |• formatter     |
 |||||
+
 | Ahmed Adel Hassan       | 1900311  |ahmedadelhassan159 |• formatter     |
 |                         |          |                   |• Network analysis|
 
