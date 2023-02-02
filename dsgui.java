@@ -346,7 +346,8 @@ public class dsgui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void OPENActionPerformed(java.awt.event.ActionEvent evt) {                                     
+    private void OPENActionPerformed(java.awt.event.ActionEvent evt) { 
+        redo.clear();
         undo.push("open");
         outputArea.setText(null);
         OPEN.setText("OPEN FILE");
@@ -379,7 +380,8 @@ public class dsgui extends javax.swing.JFrame {
 
     }                                    
        
-    private void FORMATActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void FORMATActionPerformed(java.awt.event.ActionEvent evt) {  
+        redo.clear();
         undo.push("format");
         outputArea.setText(null);
 
@@ -399,6 +401,7 @@ public class dsgui extends javax.swing.JFrame {
 
     private void COMPRESSActionPerformed(java.awt.event.ActionEvent evt) {                                         
         try {
+            redo.clear();
             undo.push("compress");
             outputArea.setText(null);
             String str = inputArea.getText();
@@ -428,7 +431,8 @@ public class dsgui extends javax.swing.JFrame {
 
     }                                        
 
-    private void CORRECTActionPerformed(java.awt.event.ActionEvent evt) {                                        
+    private void CORRECTActionPerformed(java.awt.event.ActionEvent evt) {          
+        redo.clear();
         outputArea.setText(null);
         undo.push("correct") ;
         try {
@@ -456,7 +460,8 @@ public class dsgui extends javax.swing.JFrame {
         }
     }                                       
 
-    private void EXPANDActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void EXPANDActionPerformed(java.awt.event.ActionEvent evt) {  
+        redo.clear();
         undo.push("expand");
         outputArea.setText(null);
         JFileChooser fc = new JFileChooser();
@@ -491,7 +496,8 @@ public class dsgui extends javax.swing.JFrame {
 
     }                                      
 
-    private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) { 
+        redo.clear();
         undo.push("TOJSON");
         outputArea.setText(null);
         String v = inputArea.getText();
@@ -523,7 +529,8 @@ public class dsgui extends javax.swing.JFrame {
         outputArea.setForeground(Color.decode("#5EBA7D"));
     }                                      
 
-    private void CHECKActionPerformed(java.awt.event.ActionEvent evt) {                                      
+    private void CHECKActionPerformed(java.awt.event.ActionEvent evt) {      
+        redo.clear();
         undo.add("check");
         outputArea.setText(null);
         if (inputArea.getText().isBlank()) {
@@ -553,7 +560,8 @@ public class dsgui extends javax.swing.JFrame {
         }
     }                                     
    
-    private void MINIFYActionPerformed(java.awt.event.ActionEvent evt) {                                       
+    private void MINIFYActionPerformed(java.awt.event.ActionEvent evt) {   
+        redo.clear();
         undo.add("minify") ;
        outputArea.setText(null);
         String c = inputArea.getText();
@@ -577,6 +585,7 @@ public class dsgui extends javax.swing.JFrame {
     }
     private void clearActionPerformed(java.awt.event.ActionEvent evt) {                                      
         undo.add("clear");
+        redo.clear();
         clearCommand();
     }                                     
 
