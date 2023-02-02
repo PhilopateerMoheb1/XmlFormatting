@@ -8,87 +8,104 @@ import Phase1.Post;
 import Phase1.User;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @authorAhmed Adel Hassan
  */
 public class NetworkAnalysis {
-    private List<User> followers;
 
-    public NetworkAnalysis() {
-        this.followers = new ArrayList<>();
+    private final User[] users;
+
+    //O(1)
+    public NetworkAnalysis(User[] users) {
+        this.users = users;
     }
 
-    public List<User> getFollowers() {
-        return followers;
-    }
-
-    public void setFollowers(List<User> followers) {
-        this.followers = followers;
-    }
-    
-    public static User getTopInfluencer(User[] users) {
-    int maxFollowers = 0;
-    User userWithMostFollowers = null;
-    for (User user : users) {
-        int numFollowers = user.getFollowersListCopy().size();
-        if (numFollowers > maxFollowers) {
-            maxFollowers = numFollowers;
-            userWithMostFollowers = user;
-        }
-    }
-
-    return userWithMostFollowers;
-}
-public User getTopActive(User[] users) {
-    User mostRepeatedFollower = null;
-    int maxCount = 0;
-    
-    for (User user : users) {
-        List<User> followers = user.getFollowersListCopy();
-        for (User follower : followers) {
-            int count = 0;
-            for (User otherUser : users) {
-                if (otherUser.getFollowersListCopy().contains(follower)) {
-                    count++;
-                } 
+    // get user with most followes O(n)
+    public User getTopinfluencer() {
+        User top = null;
+        for (User user : users) {
+            if (top == null) {
+                top = user;
+                continue;
             }
-
-            if (count > maxCount) {  // found a new most repeated follower 
-                maxCount = count;  // update the max count 
-                mostRepeatedFollower = follower; // update the most repeated follower 
-            }  
-
-        }
-
-    }
-
-    return mostRepeatedFollower;  // return the most repeated follower 
-}
-        public   List<User> getSuggerstions(User user) {
-        List<User> suggestedFollowers  = new ArrayList<User>();
-    for (User follower : user.getFollowersListCopy()) {
-        for (User followerFollower : follower.getFollowersListCopy()) {
-            if (!user.getFollowersListCopy().contains(followerFollower) && !suggestedFollowers.contains(followerFollower)) {
-                suggestedFollowers.add(followerFollower);
+            if (user.getFollowersCount() > top.getFollowersCount()) {
+                top = user;
             }
         }
+        return top;
     }
 
-    return suggestedFollowers;
-}
-            public List<User> getMutul(User user1, User user2) {
-    List<User> mutualFollowers = new ArrayList<>();
-
-    for (User follower1 : user1.getFollowersListCopy()) {
-        for (User follower2 : user2.getFollowersListCopy()) {
-            if (follower1.equals(follower2)) {
-                mutualFollowers.add(follower1);
+    // get user with most following O(n^2) 
+    public User getTopActive() {
+        HashMap<User, Integer> count = new HashMap<>();
+        for (User user : users) {
+            for (User follower : user.getFollowersListCopy()) {
+                if (count.get(follower) == null) {
+                    count.put(follower, 1);
+                    continue;
+                }
+                count.put(follower, count.get(follower) + 1);
             }
         }
+
+        Map.Entry<User, Integer> maxEntry = null;
+
+        for (Map.Entry<User, Integer> entry : count.entrySet()) {
+            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
+                maxEntry = entry;
+            }
+        }
+
+        return maxEntry.getKey();
+
     }
 
-    return mutualFollowers;
+    //get mutual friends between two users O(n^2)
+    public User[] getMutual(User user1, User user2) {
+        ArrayList<User> mutuals = new ArrayList<>();
+        for (User follower1 : user1.getFollowersListCopy()) {
+            for (User follower2 : user2.getFollowersListCopy()) {
+                if (follower1 == follower2) {
+                    mutuals.add(follower1);
+                }
+            }
+        }
+        return (User[]) mutuals.toArray(User[]::new);
+    }
+
+    // get followrs of the followers O(n^3)
+    public User[] getSuggerstions(User user) {
+        ArrayList<User> suggestions = new ArrayList<>();
+        ArrayList<User> followers = user.getFollowersListCopy();
+        for (User follower1 : followers) {
+            for (User follower2 : follower1.getFollowersListCopy()) {
+                if (user == follower2) {
+                    continue;
+                }
+                boolean dub = false;
+                for (User sug : suggestions) {
+                    if (sug == follower2){
+                        dub = true;
+                        break;
+                    }
+                }
+                if(dub) continue;
+                for (User sug : followers) {
+                    if (sug == follower2){
+                        dub = true;
+                        break;
+                    }
+                }
+                if(dub) continue;
+                suggestions.add(follower2);
+
+            }
+        }
+        return (User[]) suggestions.toArray(User[]::new);
+    }
 }
 	public static void main(String[] args)
         {
