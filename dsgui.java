@@ -504,21 +504,22 @@ public class dsgui extends javax.swing.JFrame {
     }                                      
 
     private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        redo.clear();
+           redo.clear();
         undo.push("TOJSON");
         outputArea.setText(null);
         String v = inputArea.getText();
-        inputStack.push(v);
+        inputStack.push(v) ;
         if (v == null || v.isBlank()) {
             outputArea.append("please insert text to convert\n");
             return;
         }
-        String d = converter(checker).toString();
+       checker = new XMLChecker(Deformatter.deformate(inputArea.getText()));
+         String d = converter(checker).toString();
 
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(jPanel1);
         File file = fc.getSelectedFile();
-
+        
         if (file == null) {
             return;
         }
