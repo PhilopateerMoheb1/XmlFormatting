@@ -443,7 +443,6 @@ public class dsgui extends javax.swing.JFrame {
         undo.push("correct");
         try {
             String[] v = null;
-            checker.Check();
             inputStack.push(inputArea.getText());
             checker.correct();
             int i = checker.getErrorCount();
@@ -504,22 +503,23 @@ public class dsgui extends javax.swing.JFrame {
     }                                      
 
     private void TOJSONActionPerformed(java.awt.event.ActionEvent evt) {                                       
-           redo.clear();
+        
+        
+        redo.clear();
         undo.push("TOJSON");
         outputArea.setText(null);
         String v = inputArea.getText();
-        inputStack.push(v) ;
+        inputStack.push(v);
         if (v == null || v.isBlank()) {
             outputArea.append("please insert text to convert\n");
             return;
         }
-       checker = new XMLChecker(Deformatter.deformate(inputArea.getText()));
-         String d = converter(checker).toString();
+        String d = converter(checker).toString();
 
         JFileChooser fc = new JFileChooser();
         fc.showSaveDialog(jPanel1);
         File file = fc.getSelectedFile();
-        
+
         if (file == null) {
             return;
         }
@@ -547,7 +547,7 @@ public class dsgui extends javax.swing.JFrame {
             return;
         }
         try {
-            checker = new XMLChecker(inputArea.getText());
+            checker = new XMLChecker(Deformatter.deformate(inputArea.getText()));
             checker.Check();
             CORRECT.setEnabled(true);
             if (checker.isCorrect() == true) {
@@ -594,6 +594,9 @@ public class dsgui extends javax.swing.JFrame {
         undo.add("clear");
         redo.clear();
         clearCommand();
+        TOJSON.setEnabled(false);
+        Analysis.setEnabled(false);
+        CORRECT.setEnabled(false);
     }                                     
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {                                         
