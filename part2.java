@@ -163,7 +163,7 @@ public class part2 extends javax.swing.JFrame {
 
         sugButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         sugButton.setForeground(new java.awt.Color(51, 51, 255));
-        sugButton.setText("getSuggerstions");
+        sugButton.setText("Get suggestions");
         sugButton.setSelected(true);
         sugButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -313,16 +313,24 @@ public class part2 extends javax.swing.JFrame {
     }                                        
 
     private void AnalysisActionPerformed(java.awt.event.ActionEvent evt) {                                         
-
+        try{
         output.setText(null);
 
-        User TA = analysis.getTopActive();
-        User TI = analysis.getTopinfluencer();
+        User[] TA = analysis.getTopActive();
+        User[] TI = analysis.getTopinfluencer();
         output.append("Top Influencer: ");
-        output.append("\nName: " + TI.getName() + ", ID: " + TI.getID());
+        for(User user:TI){
+            output.append("\nName: " + user.getName() + ", ID: " + user.getID());
+        }
         output.append("\nTop Active: ");
-        output.append("\nName: " + TA.getName() + ", ID: " + TA.getID());
+        for(User user:TA){
+            output.append("\nName: " + user.getName() + ", ID: " + user.getID());
+        }
         output.setForeground(Color.black);
+        }catch(NullPointerException e){
+            output.append("unable to do analysis!");
+            output.setForeground(Color.red);
+        }
     }                                        
 
     private void sugButtonActionPerformed(java.awt.event.ActionEvent evt) {                                          
@@ -350,7 +358,7 @@ public class part2 extends javax.swing.JFrame {
         }
         User[] sug = analysis.getSuggerstions(user1);
         if (sug == null || sug.length == 0) {
-            output.append("no mutual follower found!");
+            output.append("no suggestions found!");
             output.setForeground(Color.red);
             return;
         }
