@@ -1,6 +1,6 @@
 
 # XML EDITOR
-ASU ENG CSE senior1 Datas tructure and algorithms project
+ASU ENG CSE senior1 Data structures and algorithms project
 ## contributors:
 
 | Name                    | Code     | github account    |contribution    |
