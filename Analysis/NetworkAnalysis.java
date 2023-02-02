@@ -4,16 +4,13 @@
  */
 package phase2;
 
-import Phase1.Post;
 import Phase1.User;
 import java.util.ArrayList;
-import java.util.List;
+
 import java.util.HashMap;
+
 import java.util.Map;
-/**
- *
- * @authorAhmed Adel Hassan
- */
+
 public class NetworkAnalysis {
 
     private final User[] users;
@@ -24,22 +21,26 @@ public class NetworkAnalysis {
     }
 
     // get user with most followes O(n)
-    public User getTopinfluencer() {
-        User top = null;
+    public User[] getTopinfluencer() {
+        ArrayList<User> top = new ArrayList<>();
+        int maxFollowers = -1;
         for (User user : users) {
-            if (top == null) {
-                top = user;
+            if (top.isEmpty() || user.getFollowersCount() == maxFollowers) {
+                top.add(user);
+                maxFollowers = user.getFollowersCount();
                 continue;
             }
-            if (user.getFollowersCount() > top.getFollowersCount()) {
-                top = user;
+            if (user.getFollowersCount() > maxFollowers) {
+                top.clear();
+                top.add(user);
+                maxFollowers = user.getFollowersCount();
             }
         }
-        return top;
+        return top.toArray(User[]::new);
     }
 
     // get user with most following O(n^2) 
-    public User getTopActive() {
+    public User[] getTopActive() {
         HashMap<User, Integer> count = new HashMap<>();
         for (User user : users) {
             for (User follower : user.getFollowersListCopy()) {
@@ -51,15 +52,24 @@ public class NetworkAnalysis {
             }
         }
 
-        Map.Entry<User, Integer> maxEntry = null;
+        ArrayList<User> maxEntries = new ArrayList<>();
+        int maxval = -1;
 
         for (Map.Entry<User, Integer> entry : count.entrySet()) {
-            if (maxEntry == null || entry.getValue().compareTo(maxEntry.getValue()) > 0) {
-                maxEntry = entry;
+            if (maxEntries.isEmpty() || entry.getValue().compareTo(maxval) == 0) {
+                maxEntries.add(entry.getKey());
+                maxval = entry.getValue();
+                continue;
             }
+            if (entry.getValue().compareTo(maxval) > 0) {
+                maxEntries.clear();
+                maxEntries.add(entry.getKey());
+                maxval = entry.getValue();
+            }
+
         }
 
-        return maxEntry.getKey();
+        return maxEntries.toArray(User[]::new);
 
     }
 
@@ -87,19 +97,23 @@ public class NetworkAnalysis {
                 }
                 boolean dub = false;
                 for (User sug : suggestions) {
-                    if (sug == follower2){
+                    if (sug == follower2) {
                         dub = true;
                         break;
                     }
                 }
-                if(dub) continue;
+                if (dub) {
+                    continue;
+                }
                 for (User sug : followers) {
-                    if (sug == follower2){
+                    if (sug == follower2) {
                         dub = true;
                         break;
                     }
                 }
-                if(dub) continue;
+                if (dub) {
+                    continue;
+                }
                 suggestions.add(follower2);
 
             }
@@ -107,30 +121,4 @@ public class NetworkAnalysis {
         return (User[]) suggestions.toArray(User[]::new);
     }
 }
-	public static void main(String[] args)
-        {
-        NetworkAnalysis c=new NetworkAnalysis();
-        User philo = new User(1,"philo");
-        User samy = new User(2,"samy");
-        User sa = new User(3,"sa");
-        User e = new User(3,"sa");
-        User n = new User(3,"sa");
-        User x = new User(3,"sa");
-        philo.addFollower(samy);
-        philo.addFollower(sa);
-        samy.addFollower(e);
-        samy.addFollower(n);
-        Post p = new Post();
-        p.setText("i love egypt");
-        p.addTopic("i ");
-        p.addTopic("Love");
-        philo.getPostsListCopy();
-        p.addTopic("ssssssssssssss");
-        philo.addPost(p);
-        ArrayList <User> a=new ArrayList<> ();
-        a.add(philo);
-        a.add(samy);
-        System.out.println(philo);
-        }
-    
-}
+
