@@ -9,7 +9,6 @@ import Phase1.XMLChecker;
 import Phase1.Xmfile;
 import phase2.classesGenerator;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
@@ -372,9 +371,11 @@ public class dsgui extends javax.swing.JFrame {
             Analysis.setEnabled(false);
             TOJSON.setEnabled(false);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
+            outputArea.append("file not found!");
+            outputArea.setForeground(Color.red);
         } catch (NullPointerException ne) {
             outputArea.append("no file selected");
+            outputArea.setForeground(Color.black);
         }
 
 
@@ -494,7 +495,8 @@ public class dsgui extends javax.swing.JFrame {
             TOJSON.setEnabled(false);
             Analysis.setEnabled(false);
         } catch (IOException ex) {
-            Logger.getLogger(dsgui.class.getName()).log(Level.SEVERE, null, ex);
+            outputArea.append("permsion failed!");
+            outputArea.setForeground(Color.red);
         } catch (StringIndexOutOfBoundsException e) {
             outputArea.append("expansion failed your file might be damaged.");
             outputArea.setForeground(Color.red);
